@@ -12,57 +12,34 @@ import { useRouter } from "next/navigation";
 
 const schema = z.object({
   email: z.string().email(),
-  password: z
-    .string()
-    .regex(
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).+$/,
-      "Password must contain uppercase, lowercase, number, and special character, with no spaces"
-    )
-    .min(8)
-    .max(64),
+  password: z.string(),
 });
 type LogInput = z.infer<typeof schema>;
 
 export default function FormLogin() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
-  const [accessToken, setAccessToken] = useState(null);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    watch,
     reset,
   } = useForm<LogInput>({ resolver: zodResolver(schema) });
-  const password = watch("password");
   const onSubmit: SubmitHandler<LogInput> = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setErrorMsg("");
     // Send a POST request
     axios
-      .post(
-        `${baseUrl}/auth/v1/token?grant_type=password`,
-        {
-          email: data.email,
-          password: data.password,
-        },
-        {
-          headers: {
-            apikey: apiKey,
-          },
-        }
-      )
+      .post("/api/auth/login", {
+        email: data.email,
+        password: data.password,
+      })
       .then((response) => {
-        console.log(response.data);
-        setAccessToken(response.data.access_token);
         reset();
         router.push("/dashboard");
       })
       .catch((error) => {
-        console.log(error);
-        setErrorMsg(error.response.data.msg);
+        setErrorMsg(error.response?.data?.error || "invalid email or password");
       });
   };
 
@@ -98,7 +75,7 @@ export default function FormLogin() {
             href={"/registration/SignUp"}
             className="px-2 underline font-medium textStyle"
           >
-            Signup
+            Signup for free
           </Link>
         </p>
       </form>
