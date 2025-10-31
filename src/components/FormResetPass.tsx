@@ -56,7 +56,7 @@ export default function FormResetPass() {
         {
           headers: {
             // todo token!!!
-            Authorization: Bearer<ACCESS_TOKEN>,
+            // Authorization: Bearer<ACCESS_TOKEN>,
             apikey: apiKey,
             "Content-Type": "application/json",
           },
