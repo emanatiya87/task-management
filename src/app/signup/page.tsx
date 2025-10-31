@@ -13,11 +13,13 @@ export default function Signup() {
           />
         </div>
         <div className="flex justify-center flex-1">
-          <div>
-            <h2 className="text-2xl font-bold my-2  w-100">
+          <div className="w-full">
+            <h2 className="text-2xl font-bold my-2 text-center ">
               Welcome back , Yash
             </h2>
-            <p>Welcome back! Please enter your details</p>
+            <p className="text-center">
+              Welcome back! Please enter your details
+            </p>
             <FormSignUp />
           </div>
         </div>

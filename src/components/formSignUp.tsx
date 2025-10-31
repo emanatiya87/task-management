@@ -90,7 +90,7 @@ export default function FormSignUp() {
     <>
       <form
         action=""
-        className="mt-3 mx-auto"
+        className="mt-3 mx-auto w-[85%]"
         onSubmit={handleSubmit(onSubmit)}
       >
         <InputDiv
