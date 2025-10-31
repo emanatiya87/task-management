@@ -63,7 +63,10 @@ export default function FormLogin() {
 
         <div className="flex items-center justify-between my-5">
           <CheckboxDiv value={"Remember me"} />
-          <Link href={"/"} className="underline text-sm font-medium textStyle">
+          <Link
+            href={"/registration/forgot-password"}
+            className="underline text-sm font-medium textStyle"
+          >
             Forget Password
           </Link>
         </div>
