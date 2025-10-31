@@ -7,14 +7,16 @@ export default function Signup() {
         <div className="sm:flex-1 flex-0">
           <Image
             src="/signupimg.svg"
-            alt="Picture of the author"
+            alt="Sign Up img"
             width={500}
             height={500}
           />
         </div>
-        <div className="flex justify-center   flex-1">
+        <div className="flex justify-center flex-1">
           <div>
-            <h2 className="text-2xl font-bold my-2">Welcome back , Yash</h2>
+            <h2 className="text-2xl font-bold my-2  w-100">
+              Welcome back , Yash
+            </h2>
             <p>Welcome back! Please enter your details</p>
             <FormSignUp />
           </div>
