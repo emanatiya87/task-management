@@ -12,30 +12,26 @@ export default function ResgitrationLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <section className="w-[80vw] m-auto flex items-center h-dvh ">
-          <div className="sm:flex-1 flex-0">
-            <Image
-              src="/signupimg.svg"
-              alt="Sign Up img"
-              width={500}
-              height={500}
-            />
-          </div>
-          <div className="flex justify-center flex-1">
-            <div className="w-full">
-              <h2 className="textStyle text-2xl font-bold my-2 text-center ">
-                Welcome back , Yash
-              </h2>
-              <p className="textStyle text-center">
-                Welcome back! Please enter your details
-              </p>
-              {children}
-            </div>
-          </div>
-        </section>
-      </body>
-    </html>
+    <section className="w-[80vw] m-auto flex items-center h-dvh ">
+      <div className="sm:flex-1 flex-0">
+        <Image
+          src="/signupimg.svg"
+          alt="Sign Up img"
+          width={500}
+          height={500}
+        />
+      </div>
+      <div className="flex justify-center flex-1">
+        <div className="w-full">
+          <h2 className="textStyle text-2xl font-bold my-2 text-center ">
+            Welcome back , Yash
+          </h2>
+          <p className="textStyle text-center">
+            Welcome back! Please enter your details
+          </p>
+          {children}
+        </div>
+      </div>
+    </section>
   );
 }
