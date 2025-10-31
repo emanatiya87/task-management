@@ -23,10 +23,12 @@ const schema = z
     email: z.string().email(),
     password: z
       .string()
-      .regex(
-        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).+$/,
-        "Password must contain uppercase, lowercase, number, and special character, with no spaces"
-      )
+      .regex(/[a-z]/, { error: "Contain at least one samll letter." })
+      .regex(/[A-Z]/, { error: "Contain at least one capital letter." })
+      .regex(/[0-9]/, { error: "Contain at least one number." })
+      .regex(/[^a-zA-Z0-9]/, {
+        error: "Contain at least one special character.",
+      })
       .min(8)
       .max(64),
 
