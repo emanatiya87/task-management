@@ -146,7 +146,7 @@ export default function FormSignUp() {
         <p className=" text-sm mt-1 text-center text-gray-900 dark:text-gray-300">
           Already hane an account?{" "}
           <Link
-            href={"/Login"}
+            href={"/registration/Login"}
             className="px-2 underline font-medium  text-gray-900 dark:text-gray-300"
           >
             Login
