@@ -130,10 +130,7 @@ export default function FormSignUp() {
         />
         <div className="flex items-center justify-between my-5">
           <CheckboxDiv value={"Terms & Conditions"} />
-          <Link
-            href={"/"}
-            className="underline text-sm font-medium text-gray-900 dark:text-gray-300"
-          >
+          <Link href={"/"} className="underline text-sm font-medium textStyle">
             Forget Password
           </Link>
         </div>
@@ -143,11 +140,11 @@ export default function FormSignUp() {
           disabledStatue={isSubmitting}
         />
         <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
-        <p className=" text-sm mt-1 text-center text-gray-900 dark:text-gray-300">
+        <p className=" text-sm mt-1 text-center textStyle">
           Already hane an account?{" "}
           <Link
             href={"/registration/Login"}
-            className="px-2 underline font-medium  text-gray-900 dark:text-gray-300"
+            className="px-2 underline font-medium textStyle"
           >
             Login
           </Link>

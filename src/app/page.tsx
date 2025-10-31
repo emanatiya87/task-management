@@ -4,7 +4,7 @@ export default function Home() {
     <>
       <div className="bg-primary">
         <h2 className="text-teal-200 text-center">hello</h2>
-        <Link href="/signup"> signup</Link>
+        <Link href="/registration/SignUp"> signup</Link>
       </div>
     </>
   );

@@ -25,10 +25,10 @@ export default function ResgitrationLayout({
           </div>
           <div className="flex justify-center flex-1">
             <div className="w-full">
-              <h2 className="text-2xl font-bold my-2 text-center ">
+              <h2 className="textStyle text-2xl font-bold my-2 text-center ">
                 Welcome back , Yash
               </h2>
-              <p className="text-center">
+              <p className="textStyle text-center">
                 Welcome back! Please enter your details
               </p>
               {children}
