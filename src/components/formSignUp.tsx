@@ -132,9 +132,6 @@ export default function FormSignUp() {
         />
         <div className="flex items-center justify-between my-5">
           <CheckboxDiv value={"Terms & Conditions"} />
-          <Link href={"/"} className="underline text-sm font-medium textStyle">
-            Forget Password
-          </Link>
         </div>
         <Btn
           value={"Sign Up"}

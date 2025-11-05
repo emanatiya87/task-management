@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: red;
+  --color-primary: gray;
 }
 
 .labelStyle {

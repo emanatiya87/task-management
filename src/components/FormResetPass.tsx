@@ -1,15 +1,13 @@
 "use client";
 import axios from "axios";
 import InputDiv from "./InputDiv";
-import CheckboxDiv from "./checkBoxDiv";
 import Btn from "./btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 const schema = z
   .object({
     password: z
@@ -31,6 +29,8 @@ const schema = z
 type IFormInput = z.infer<typeof schema>;
 
 export default function FormResetPass() {
+  const token = sessionStorage.getItem("hashToken");
+  const [successMsg, setSuccessMsg] = useState("");
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -46,7 +46,6 @@ export default function FormResetPass() {
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setErrorMsg("");
-    // Send a POST request
     axios
       .put(
         `${baseUrl}/auth/v1/user`,
@@ -55,8 +54,7 @@ export default function FormResetPass() {
         },
         {
           headers: {
-            // todo token!!!
-            // Authorization: Bearer<ACCESS_TOKEN>,
+            Authorization: `Bearer ${token}`,
             apikey: apiKey,
             "Content-Type": "application/json",
           },
@@ -64,10 +62,13 @@ export default function FormResetPass() {
       )
       .then((response) => {
         console.log(response.data);
-        console.log(
+        setSuccessMsg(
           "Your password has been updated successfully. You can now log in"
         );
         reset();
+        setTimeout(() => {
+          router.push("/registration/Login");
+        }, 3000);
       })
       .catch((error) => {
         setErrorMsg(error.response.data.msg);
@@ -83,7 +84,7 @@ export default function FormResetPass() {
       >
         <InputDiv
           type="password"
-          title={"Password"}
+          title={"New Password"}
           id={"password"}
           register={register("password")}
           error={errors.password}
@@ -95,9 +96,18 @@ export default function FormResetPass() {
           register={register("confirmPassword")}
           error={errors.confirmPassword}
         />
-
         <Btn value={"Reset"} btnType={"submit"} disabledStatue={isSubmitting} />
         <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
+        <p className="text-teal-500 text-sm mt-1 text-center">{successMsg}</p>
+        <p className=" text-sm mt-1 text-center textStyle">
+          Finished?
+          <Link
+            href={"/registration/Login"}
+            className="px-2 underline font-medium textStyle"
+          >
+            Login
+          </Link>
+        </p>
       </form>
     </>
   );
