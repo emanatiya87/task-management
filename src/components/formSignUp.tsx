@@ -80,7 +80,7 @@ export default function FormSignUp() {
       .then((response) => {
         console.log(response.data);
         setAccessToken(response.data.access_token);
-        router.push("/");
+        router.push("/registration/Login");
         reset();
       })
       .catch((error) => {

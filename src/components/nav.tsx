@@ -1,6 +1,10 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import Dropdown from "./dropdown";
 export default function Nav() {
+  const [open, setOpen] = useState(false);
   return (
     <>
       <nav className="bg-white border-gray-900 dark:bg-gray-900 py-2 px-3 shadow-md h-[60px] fixed top-0 right-0 left-0">
@@ -30,13 +34,19 @@ export default function Nav() {
                 Visual Designer
               </h6>
             </div>
-            <Image
-              src="/user.png"
-              alt="Profile"
-              className="rounded-[50%] shadow-lg"
-              width={30}
-              height={20}
-            />
+            <div className="relative">
+              <Image
+                src="/user.png"
+                alt="Profile"
+                className="rounded-[50%] shadow-lg"
+                width={30}
+                height={20}
+                onClick={() => setOpen((prev) => !prev)}
+              />
+              <div className="absolute top0 end-0">
+                <Dropdown open={open} />
+              </div>
+            </div>
           </div>
         </div>
       </nav>
