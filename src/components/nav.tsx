@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Nav() {
   return (
     <>
-      <nav className="bg-white border-gray-900 dark:bg-gray-900 py-2 px-3 shadow-md">
+      <nav className="bg-white border-gray-900 dark:bg-gray-900 py-2 px-3 shadow-md h-[60px] fixed top-0 right-0 left-0">
         <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto ">
           <Link
             href="/"
@@ -31,11 +31,11 @@ export default function Nav() {
               </h6>
             </div>
             <Image
-              src="/signupimg.svg"
+              src="/user.png"
               alt="Profile"
-              className="rounded-full shadow-lg"
-              width={40}
-              height={40}
+              className="rounded-[50%] shadow-lg"
+              width={30}
+              height={20}
             />
           </div>
         </div>

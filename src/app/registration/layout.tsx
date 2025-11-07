@@ -12,8 +12,8 @@ export default function ResgitrationLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className="w-[80vw] m-auto flex items-center h-dvh ">
-      <div className="sm:flex-1 flex-0">
+    <section className="px-2 w-full m-auto flex items-center  ">
+      <div className="md:flex-1 flex-0">
         <Image
           src="/signupimg.svg"
           alt="Sign Up img"

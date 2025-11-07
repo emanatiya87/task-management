@@ -9,11 +9,6 @@ export default function Home() {
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
     const token = params.get("access_token");
-    const refreshToken = params.get("refresh_token");
-    const expiresAt = params.get("expires_at");
-    const expiresIn = params.get("expires_in");
-    const tokenType = params.get("token_type");
-
     if (token) {
       router.push("/registration/reset-password");
       console.log("yes");
