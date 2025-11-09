@@ -3,8 +3,10 @@
 import Sidebar from "@/components/sidebar";
 import Nav from "@/components/nav";
 import { useState } from "react";
-
-export default function LayoutClient({ children }) {
+interface LayoutClientProps {
+  children: React.ReactNode;
+}
+export default function LayoutClient({ children }:LayoutClientProps) {
   const [open, setOpen] = useState(false);
 
   return (
