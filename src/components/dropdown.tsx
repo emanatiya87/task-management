@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Logout from "./logout";
-export default function Dropdown({ open }) {
+interface DropdownProps {
+  open: boolean;
+}
+export default function Dropdown({ open }: DropdownProps) {
   return (
     <div
       id="dropdown"
