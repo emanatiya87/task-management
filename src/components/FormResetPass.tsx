@@ -29,7 +29,14 @@ const schema = z
 type IFormInput = z.infer<typeof schema>;
 
 export default function FormResetPass() {
-  const token = sessionStorage.getItem("hashToken");
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const t = sessionStorage.getItem("reset_token");
+      setToken(t);
+    }
+  }, []);
   const [successMsg, setSuccessMsg] = useState("");
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
