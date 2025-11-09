@@ -7,14 +7,11 @@ import { IoSettings } from "react-icons/io5";
 import Link from "next/link";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { MdArrowRight } from "react-icons/md";
-
-export default function Sidebar({
-  open,
-  setOpen,
-}: {
+interface SidebarProps {
   open: boolean;
-  setOpen: (value: boolean) => void;
-}) {
+  setOpen: (value: boolean | ((prev: boolean) => boolean)) => void;
+}
+export default function Sidebar({ open, setOpen }: SidebarProps) {
   return (
     <>
       <aside
