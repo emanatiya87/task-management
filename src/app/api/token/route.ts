@@ -1,11 +1,21 @@
+export const runtime = "nodejs"; // keep this
+
+import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  const cookieStore = cookies();
+  try {
+    const cookieStore = await cookies(); // ✅ MUST AWAIT
 
-  const token = cookieStore.get("access_token")?.value || null;
-  const refresh = cookieStore.get("refresh_token")?.value || null;
-  console.log("Cookies received:", cookies().getAll());
+    const accessCookie = cookieStore.get("access_token");
+    const refreshCookie = cookieStore.get("refresh_token");
 
-  return Response.json({ token, refresh });
+    return NextResponse.json({
+      access: accessCookie?.value || null,
+      refresh: refreshCookie?.value || null,
+    });
+  } catch (err) {
+    console.error("TOKEN API ERROR:", err);
+    return NextResponse.json({ access: null, refresh: null }, { status: 500 });
+  }
 }

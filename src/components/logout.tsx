@@ -1,55 +1,48 @@
-// "use client";
-// import axios from "axios";
-// import { getToken } from "@/actions/getToken";
-// import { useState, useEffect } from "react";
-// export default function Logout() {
-//   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-//   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-//   const [token, setToken] = useState("");
-
-//   useEffect(() => {
-//     getToken().then(setToken);
-//   }, []);
-
-//   // Send a POST request
-//   function out() {
-//     console.log(token);
-//     // axios
-//     //   .post(`${baseUrl}/auth/v1/logout`, {
-//     //     headers: {
-//     //       apikey: apiKey,
-//     //       Authorization: `Bearer ${token}`,
-//     //     },
-//     //   })
-//     //   .then((response) => {
-//     //     console.log(response);
-//     //     // router.push("/");
-//     //   })
-//     //   .catch((error) => {
-//     //     console.log(error);
-//     //   });
-//   }
-//   return (
-//     <>
-//       <span onClick={() => console.log("out")}>logout</span>
-//     </>
-//   );
-// }
 "use client";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+export default function Logout() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const [token, setToken] = useState(null);
+  const router = useRouter();
 
-import { useEffect, useState } from "react";
-
-export default function Profile() {
-  const [tokens, setTokens] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const res = await fetch("/api/token");
-      const data = await res.json();
-      setTokens(data);
-      console.log(data);
-    })();
-  }, []);
-
-  return <pre>{JSON.stringify(tokens, null, 2)}</pre>;
+  // Send a POST request
+ async function out() {
+  await (async () => {
+      try {
+        const res = await fetch("/api/token");
+        const data = await res.json();
+        setToken(data.access);
+      } catch (err) {
+        console.error("Failed to load token:", err);
+        setToken(null);
+      }
+    })()
+    axios
+      .post(
+        `${baseUrl}/auth/v1/logout`,
+        {},
+        {
+          headers: {
+            apikey: apiKey,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Logged out: ", response);
+        router.push("/");
+      })
+      .then(() => fetch("/api/logout"))
+      .catch((error) => {
+        console.log("error logout ", error);
+      });
+  }
+  return (
+    <>
+      <span onClick={() => out()}>logout</span>
+    </>
+  );
 }
