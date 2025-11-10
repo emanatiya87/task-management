@@ -131,7 +131,7 @@ export default function FormSignUp() {
           error={errors.job}
         />
         <div className="flex items-center justify-between my-5">
-          <CheckboxDiv value={"Terms & Conditions"} />
+          <CheckboxDiv value={"Terms & Conditions"} required={true} />
         </div>
         <Btn
           value={"Sign Up"}
