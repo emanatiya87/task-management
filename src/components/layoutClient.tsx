@@ -6,8 +6,8 @@ import { useState } from "react";
 interface LayoutClientProps {
   children: React.ReactNode;
 }
-export default function LayoutClient({ children }:LayoutClientProps) {
-  const [open, setOpen] = useState(false);
+export default function LayoutClient({ children }: LayoutClientProps) {
+  const [open, setOpen] = useState(true);
 
   return (
     <>

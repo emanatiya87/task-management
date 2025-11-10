@@ -7,10 +7,9 @@ export default function Logout() {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const [token, setToken] = useState(null);
   const router = useRouter();
-
   // Send a POST request
- async function out() {
-  await (async () => {
+  async function out() {
+    await (async () => {
       try {
         const res = await fetch("/api/token");
         const data = await res.json();
@@ -19,7 +18,7 @@ export default function Logout() {
         console.error("Failed to load token:", err);
         setToken(null);
       }
-    })()
+    })();
     axios
       .post(
         `${baseUrl}/auth/v1/logout`,
