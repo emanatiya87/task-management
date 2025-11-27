@@ -9,7 +9,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import PasswordContainer from "./passwordContainer";
 const schema = z.object({
   email: z.string().email(),
   password: z.string(),
@@ -53,8 +53,7 @@ export default function FormLogin() {
           register={register("email")}
           error={errors.email}
         />
-        <InputDiv
-          type="password"
+        <PasswordContainer
           title={"Password"}
           id={"password"}
           register={register("password")}

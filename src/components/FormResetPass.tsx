@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import InputDiv from "./InputDiv";
 import Btn from "./btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
+import PasswordContainer from "./passwordContainer";
 const schema = z
   .object({
     password: z
@@ -41,9 +40,10 @@ export default function FormResetPass() {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   useEffect(() => {
-    const t = typeof window !== "undefined"
-      ? sessionStorage.getItem("reset_token")
-      : null;
+    const t =
+      typeof window !== "undefined"
+        ? sessionStorage.getItem("reset_token")
+        : null;
 
     setToken(t);
   }, []);
@@ -75,7 +75,9 @@ export default function FormResetPass() {
         }
       );
 
-      setSuccessMsg("Your password has been updated successfully. You can now log in");
+      setSuccessMsg(
+        "Your password has been updated successfully. You can now log in"
+      );
       reset();
 
       setTimeout(() => {
@@ -87,20 +89,15 @@ export default function FormResetPass() {
   };
 
   return (
-    <form
-      className="mt-3 mx-auto w-[85%]"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <InputDiv
-        type="password"
+    <form className="mt-3 mx-auto w-[85%]" onSubmit={handleSubmit(onSubmit)}>
+      <PasswordContainer
         title="New Password"
         id="password"
         register={register("password")}
         error={errors.password}
       />
 
-      <InputDiv
-        type="password"
+      <PasswordContainer
         title="Confirm Password"
         id="confirmPassword"
         register={register("confirmPassword")}
