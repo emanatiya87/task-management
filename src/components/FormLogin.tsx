@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import PasswordContainer from "./passwordContainer";
 const schema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(1, "Password is required"),
 });
 type LogInput = z.infer<typeof schema>;
 
@@ -26,7 +26,6 @@ export default function FormLogin() {
     reset,
   } = useForm<LogInput>({ resolver: zodResolver(schema) });
   const onSubmit: SubmitHandler<LogInput> = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     setErrorMsg("");
     // Send a POST request
     axios
