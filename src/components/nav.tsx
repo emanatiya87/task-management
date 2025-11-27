@@ -1,11 +1,12 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown from "./dropdown";
 import Dark from "./darkMode";
 export default function Nav() {
   const [open, setOpen] = useState(true);
+
   return (
     <>
       <nav className="bg-white border-gray-900 dark:bg-gray-900 py-2 px-3 shadow-md h-[60px] fixed top-0 right-0 left-0">
@@ -25,7 +26,7 @@ export default function Nav() {
               AProjectO
             </span>
           </Link>
-          <Dark/>
+          <Dark />
           <div className="flex gap-2 items-center ">
             <div className="flex flex-col items-end">
               <h5 className="text-lg font-medium text-gray-900 dark:text-white">
