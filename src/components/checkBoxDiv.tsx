@@ -27,8 +27,8 @@ export default function CheckboxDiv({
         className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
       >
         {value}
-      </label>
-      {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
+      </label>{" "}
+      {error && <p className="text-red-500 text-sm mt-1 ">{error.message}</p>}
     </div>
   );
 }
