@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Dropdown from "./dropdown";
-import Dark from "./darkMode";
+import { DarkThemeToggle } from "flowbite-react";
 import { useAppContext } from "@/app/context/cookiesContext";
 type UserInfo = {
   name?: string;
@@ -52,7 +52,7 @@ export default function Nav() {
             AProjectO
           </span>
         </Link>
-        <Dark />
+        <DarkThemeToggle className="bg-white" />
         <div className={cookiesStatue ? `flex gap-2 items-center` : "hidden"}>
           {user ? (
             <>

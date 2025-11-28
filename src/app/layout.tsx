@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppProvider } from "./context/cookiesContext";
+import { ThemeModeScript } from "flowbite-react";
 
 import LayoutClient from "@/components/layoutClient";
 export const metadata: Metadata = {
@@ -13,7 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeModeScript />
+      </head>
       <body>
         <AppProvider>
           <LayoutClient>{children}</LayoutClient>
