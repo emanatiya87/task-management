@@ -34,6 +34,9 @@ const schema = z
 
     confirmPassword: z.string(),
     job: z.string().optional(),
+    acceptTerms: z.boolean().refine((val) => val === true, {
+      message: "You must accept the terms and conditions",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -123,7 +126,12 @@ export default function FormSignUp() {
         error={errors.job}
       />
       <div className="flex items-center justify-between my-5">
-        <CheckboxDiv value={"Terms & Conditions"} required={true} />
+        <CheckboxDiv
+          value={"Terms & Conditions"}
+          register={register("acceptTerms")}
+          error={errors.acceptTerms}
+          id={"terms"}
+        />
       </div>
       <Btn value={"Sign Up"} btnType={"submit"} disabledStatue={isSubmitting} />
       <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
