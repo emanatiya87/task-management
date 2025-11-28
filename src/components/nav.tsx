@@ -11,7 +11,7 @@ type UserInfo = {
 };
 
 export default function Nav() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { cookiesStatue } = useAppContext();
   const [user, setUser] = useState<UserInfo | null>(null);
 
