@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import axios from "axios";
 
 export async function POST(request: Request) {
   try {
@@ -7,24 +8,29 @@ export async function POST(request: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
-    const apiRes = await fetch(`${baseUrl}/auth/v1/token?grant_type=password`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: apiKey!,
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    let data;
 
-    const data = await apiRes.json();
-
-    if (!apiRes.ok) {
-      return NextResponse.json(
-        { error: data.msg || "Login failed" },
-        { status: 401 }
+    try {
+      const apiRes = await axios.post(
+        `${baseUrl}/auth/v1/token?grant_type=password`,
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            apikey: apiKey!,
+          },
+        }
       );
+
+      data = apiRes.data;
+    } catch (error: any) {
+      const msg = error.response?.data?.msg || "Login failed";
+      return NextResponse.json({ error: msg }, { status: 401 });
     }
 
+    // ----------------------
+    // SUCCESS
+    // ----------------------
     const { access_token, refresh_token, expires_in, user } = data;
     const identityData = user?.identities?.[0]?.identity_data ?? null;
 

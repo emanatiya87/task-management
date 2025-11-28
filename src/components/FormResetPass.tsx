@@ -42,7 +42,7 @@ export default function FormResetPass() {
   useEffect(() => {
     const t =
       typeof window !== "undefined"
-        ? sessionStorage.getItem("reset_token")
+        ? sessionStorage.getItem("hashToken")
         : null;
 
     setToken(t);
