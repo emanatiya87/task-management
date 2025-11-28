@@ -81,35 +81,33 @@ export default function FormForgetPass() {
   }
 
   return (
-    <>
-      <form className="mt-3 mx-auto w-[85%]" onSubmit={handleSubmit(onSubmit)}>
-        <InputDiv
-          type="text"
-          title={"Email"}
-          id={"email"}
-          register={register("email")}
-          error={errors.email}
-        />
+    <form className="mt-3 mx-auto w-[85%]" onSubmit={handleSubmit(onSubmit)}>
+      <InputDiv
+        type="text"
+        title={"Email"}
+        id={"email"}
+        register={register("email")}
+        error={errors.email}
+      />
 
-        <Btn
-          value={"Send Reset Link"}
-          btnType={"submit"}
-          disabledStatue={isSubmitting || disableBtnreset}
-        />
-        <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
-        <p
-          className="text-teal-700 text-sm mt-1 text-center font-semibold"
-          style={{ color: "#00796B" }}
-        >
-          {confirmMsg}
-        </p>
-        <p className=" text-sm mt-1 text-center textStyle">
-          Don't Receive An Email?{" "}
-          {disableBtnreset
-            ? `Resend in  ${time > 60 ? time % 60 : time} secs : ${Math.floor(time / 60)} mins`
-            : "Resend"}
-        </p>
-      </form>
-    </>
+      <Btn
+        value={"Send Reset Link"}
+        btnType={"submit"}
+        disabledStatue={isSubmitting || disableBtnreset}
+      />
+      <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
+      <p
+        className="text-teal-700 text-sm mt-1 text-center font-semibold"
+        style={{ color: "#00796B" }}
+      >
+        {confirmMsg}
+      </p>
+      <p className=" text-sm mt-1 text-center textStyle">
+        Don't Receive An Email?{" "}
+        {disableBtnreset
+          ? `Resend in  ${time > 60 ? time % 60 : time} secs : ${Math.floor(time / 60)} mins`
+          : "Resend"}
+      </p>
+    </form>
   );
 }

@@ -34,14 +34,12 @@ export default function Logout() {
       });
   }
   return (
-    <>
-      <span
-        onClick={() => {
-          out();
-        }}
-      >
-        logout
-      </span>
-    </>
+    <span
+      onClick={() => {
+        out();
+      }}
+    >
+      logout
+    </span>
   );
 }

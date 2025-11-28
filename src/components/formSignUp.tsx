@@ -84,64 +84,58 @@ export default function FormSignUp() {
   };
 
   return (
-    <>
-      <form
-        action=""
-        className="mt-3 mx-auto w-[85%]"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <InputDiv
-          type="text"
-          title={"Name"}
-          id={"name"}
-          register={register("name")}
-          error={errors.name}
-        />
-        <InputDiv
-          type="text"
-          title={"Email"}
-          id={"email"}
-          register={register("email")}
-          error={errors.email}
-        />
-        <PasswordContainer
-          title={"Password"}
-          id={"password"}
-          register={register("password")}
-          error={errors.password}
-        />
-        <PasswordContainer
-          title="Confirm Password"
-          id="confirmPassword"
-          register={register("confirmPassword")}
-          error={errors.confirmPassword}
-        />
-        <InputDiv
-          type="text"
-          title={"Job title"}
-          id={"job"}
-          register={register("job")}
-          error={errors.job}
-        />
-        <div className="flex items-center justify-between my-5">
-          <CheckboxDiv value={"Terms & Conditions"} required={true} />
-        </div>
-        <Btn
-          value={"Sign Up"}
-          btnType={"submit"}
-          disabledStatue={isSubmitting}
-        />
-        <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
-        <p className=" text-sm mt-1 text-center textStyle">
-          Already hane an account?{" "}
-          <Link
-            href={"/registration/Login"}
-            className="px-2 underline font-medium textStyle"
-          >
-            Login
-          </Link>
-        </p>
-      </form>
-    </>
+    <form
+      action=""
+      className="mt-3 mx-auto w-[85%]"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <InputDiv
+        type="text"
+        title={"Name"}
+        id={"name"}
+        register={register("name")}
+        error={errors.name}
+      />
+      <InputDiv
+        type="text"
+        title={"Email"}
+        id={"email"}
+        register={register("email")}
+        error={errors.email}
+      />
+      <PasswordContainer
+        title={"Password"}
+        id={"password"}
+        register={register("password")}
+        error={errors.password}
+      />
+      <PasswordContainer
+        title="Confirm Password"
+        id="confirmPassword"
+        register={register("confirmPassword")}
+        error={errors.confirmPassword}
+      />
+      <InputDiv
+        type="text"
+        title={"Job title"}
+        id={"job"}
+        register={register("job")}
+        error={errors.job}
+      />
+      <div className="flex items-center justify-between my-5">
+        <CheckboxDiv value={"Terms & Conditions"} required={true} />
+      </div>
+      <Btn value={"Sign Up"} btnType={"submit"} disabledStatue={isSubmitting} />
+      <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
+      <p className=" text-sm mt-1 text-center textStyle">
+        Already hane an account?{" "}
+        <Link
+          href={"/registration/Login"}
+          className="px-2 underline font-medium textStyle"
+        >
+          Login
+        </Link>
+      </p>
+    </form>
   );
 }
