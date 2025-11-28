@@ -112,7 +112,7 @@ export default function FormResetPass() {
       <p className="text-sm mt-1 text-center textStyle">
         Finished?
         <Link
-          href="/registration/Login"
+          href="/registration/login"
           className="px-2 underline font-medium textStyle"
         >
           Login

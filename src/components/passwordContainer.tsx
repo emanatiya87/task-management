@@ -26,7 +26,7 @@ export default function PasswordContainer({
         {...register}
       />
       <FaEye
-        className="absolute inset-y-3 end-2 flex items-center  cursor-pointer"
+        className="absolute inset-y-3 end-2 flex items-center  cursor-pointer textStyle"
         onClick={() => {
           setType((prev) => (prev == "password" ? "text" : "password"));
         }}

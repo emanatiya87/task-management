@@ -4,7 +4,7 @@ export default function Registration() {
   return (
     <div className="flex items-center justify-center gap-2 w-full my-5">
       <Link
-        href={"/registration/Login"}
+        href={"/registration/login"}
         className="underline font-bold textStyle"
       >
         Login

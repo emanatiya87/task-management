@@ -78,7 +78,7 @@ export default function FormSignUp() {
       )
       .then((response) => {
         console.log(response.data);
-        router.push("/registration/Login");
+        router.push("/registration/login");
         reset();
       })
       .catch((error) => {
@@ -138,7 +138,7 @@ export default function FormSignUp() {
       <p className=" text-sm mt-1 text-center textStyle">
         Already hane an account?{" "}
         <Link
-          href={"/registration/Login"}
+          href={"/registration/login"}
           className="px-2 underline font-medium textStyle"
         >
           Login
