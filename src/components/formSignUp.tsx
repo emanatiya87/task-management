@@ -2,6 +2,7 @@
 import axios from "axios";
 import InputDiv from "./InputDiv";
 import CheckboxDiv from "./checkBoxDiv";
+import PasswordContainer from "./passwordContainer";
 import Btn from "./btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
@@ -9,7 +10,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import PasswordContainer from "./passwordContainer";
 const schema = z
   .object({
     name: z
@@ -44,19 +44,15 @@ type IFormInput = z.infer<typeof schema>;
 export default function FormSignUp() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
-  const [accessToken, setAccessToken] = useState(null);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    watch,
     reset,
   } = useForm<IFormInput>({ resolver: zodResolver(schema) });
-  const password = watch("password");
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     setErrorMsg("");
     // Send a POST request
     axios
@@ -67,7 +63,7 @@ export default function FormSignUp() {
           password: data.password,
           data: {
             name: data.name,
-            job_title: data.job || "",
+            department: data.job || "",
           },
         },
         {
@@ -79,7 +75,6 @@ export default function FormSignUp() {
       )
       .then((response) => {
         console.log(response.data);
-        setAccessToken(response.data.access_token);
         router.push("/registration/Login");
         reset();
       })
