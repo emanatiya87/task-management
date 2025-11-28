@@ -25,7 +25,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const { access_token, refresh_token, expires_in } = data;
+    const { access_token, refresh_token, expires_in, user } = data;
+    const identityData = user?.identities?.[0]?.identity_data ?? null;
 
     const res = NextResponse.json({ success: true });
 
@@ -40,6 +41,13 @@ export async function POST(request: Request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+
+    res.cookies.set("userInfo", JSON.stringify(identityData), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: expires_in,
       path: "/",
     });
 
