@@ -1,9 +1,13 @@
+"use Client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/app/context/cookiesContext";
 export default function Logout() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const router = useRouter();
+  const { setCookiesStatue } = useAppContext();
+
   // Send a POST request
   async function out() {
     const res = await fetch("/api/token");
@@ -21,6 +25,7 @@ export default function Logout() {
       )
       .then((response) => {
         console.log("Logged out: ", response);
+        setCookiesStatue(false);
         router.push("/");
       })
       .then(() => fetch("/api/logout"))

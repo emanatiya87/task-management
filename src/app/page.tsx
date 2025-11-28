@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import ExampleComponent from "@/components/exapmle";
 export default function Home() {
   const router = useRouter();
   const [Msg, setMsg] = useState("");
@@ -22,6 +23,7 @@ export default function Home() {
       <div className="bg-primary">
         <Link href="/registration/SignUp"> signup</Link>
         <h3 className="text-red-600">{Msg}</h3>
+        <ExampleComponent />
       </div>
     </>
   );

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AppProvider } from "./context/cookiesContext";
+
 import LayoutClient from "@/components/layoutClient";
 export const metadata: Metadata = {
   title: "Task managemnet",
@@ -13,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body>
-        <LayoutClient>{children}</LayoutClient>
+        <AppProvider>
+          <LayoutClient>{children}</LayoutClient>
+        </AppProvider>
       </body>
     </html>
   );
