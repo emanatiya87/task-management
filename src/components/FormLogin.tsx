@@ -85,7 +85,7 @@ export default function FormLogin() {
         <p className=" text-sm mt-1 text-center textStyle">
           Don't have an account?{" "}
           <Link
-            href={"/registration/SignUp"}
+            href={"/registration/signup"}
             className="px-2 underline font-medium textStyle"
           >
             Signup for free

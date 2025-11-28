@@ -10,7 +10,7 @@ export default function Registration() {
         Login
       </Link>
       <Link
-        href={"/registration/SignUp"}
+        href={"/registration/signup"}
         className="underline font-bold textStyle"
       >
         Signup

@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div className="bg-primary">
-      <Link href="/registration/SignUp"> signup</Link>
+      <Link href="/registration/signup"> signup</Link>
       <h3 className="text-red-600">{Msg}</h3>
     </div>
   );
