@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
-
+import { cookies } from "next/headers";
 export async function POST() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -10,8 +10,8 @@ export async function POST() {
       return NextResponse.json({ error: "Missing env vars" }, { status: 500 });
     }
 
-    const { cookies } = require("next/headers");
-    const refresh_token = cookies().get("refresh_token")?.value;
+    const cookieStore = await cookies();
+    const refresh_token = cookieStore.get("refresh_token")?.value;
 
     if (!refresh_token) {
       return NextResponse.json({ error: "No refresh token" }, { status: 401 });
