@@ -1,5 +1,5 @@
-"use client"
-import FormResetPass from "@/components/FormResetPass";
+"use client";
+import FormResetPass from "@/components/forms/formResetPassword";
 export default function Login() {
   return <FormResetPass />;
 }

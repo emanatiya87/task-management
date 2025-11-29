@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
-import InputDiv from "./InputDiv";
-import Btn from "./btn";
+import InputDiv from "../InputContainer";
+import Btn from "../btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";
@@ -36,7 +36,6 @@ export default function FormForgetPass() {
 
     if (counter > 0) {
       setCounter((prev) => prev - 1);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       // Send a POST request
       axios
         .post(
@@ -72,7 +71,7 @@ export default function FormForgetPass() {
       setTime((prev) => {
         if (prev === 0) {
           clearInterval(timer);
-          setDisableBtnreset(false);
+          setDisableBtnreset(true);
           return prev;
         }
         return prev - 1;
@@ -93,7 +92,7 @@ export default function FormForgetPass() {
       <Btn
         value={"Send Reset Link"}
         btnType={"submit"}
-        disabledStatue={isSubmitting || disableBtnreset}
+        disabledStatue={disableBtnreset}
       />
       <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
       <p
@@ -105,7 +104,7 @@ export default function FormForgetPass() {
       <p className=" text-sm mt-1 text-center textStyle">
         Don't Receive An Email?{" "}
         {disableBtnreset
-          ? `Resend in  ${time > 60 ? time % 60 : time} secs : ${Math.floor(time / 60)} mins`
+          ? `Resend in ${Math.floor(time / 60)}mins : ${time > 60 ? time % 60 : time} secs`
           : "Resend"}
       </p>
     </form>

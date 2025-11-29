@@ -1,9 +1,9 @@
 "use client";
 import axios from "axios";
-import InputDiv from "./InputDiv";
-import CheckboxDiv from "./checkBoxDiv";
-import PasswordContainer from "./passwordContainer";
-import Btn from "./btn";
+import InputDiv from "../InputContainer";
+import CheckboxDiv from "../checkBoxDiv";
+import PasswordContainer from "../passwordContainer";
+import Btn from "../btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";

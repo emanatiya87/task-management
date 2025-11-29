@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Btn from "./btn";
+import Btn from "../btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import PasswordContainer from "./passwordContainer";
+import PasswordContainer from "../passwordContainer";
 const schema = z
   .object({
     password: z
@@ -81,7 +81,7 @@ export default function FormResetPass() {
       reset();
 
       setTimeout(() => {
-        router.push("/registration/Login");
+        router.push("/registration/login");
       }, 3000);
     } catch (error: any) {
       setErrorMsg(error.response?.data?.msg || "Request failed");

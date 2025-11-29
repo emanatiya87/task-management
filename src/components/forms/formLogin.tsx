@@ -1,15 +1,15 @@
 "use client";
 import axios from "axios";
-import InputDiv from "./InputDiv";
-import CheckboxDiv from "./checkBoxDiv";
-import Btn from "./btn";
+import InputDiv from "../InputContainer";
+import CheckboxDiv from "../checkBoxDiv";
+import Btn from "../btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import PasswordContainer from "./passwordContainer";
+import PasswordContainer from "../passwordContainer";
 import { useAppContext } from "@/app/context/cookiesContext";
 
 const schema = z.object({
