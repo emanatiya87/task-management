@@ -68,7 +68,7 @@ export default function FormLogin() {
 
         <div className="flex items-center justify-between my-5">
           <CheckboxDiv
-            value={"Terms & Conditions"}
+            value={"Remember me"}
             register={register("acceptTerms")}
             error={errors.acceptTerms}
             id={"terms"}
