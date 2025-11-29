@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import PasswordContainer from "../passwordContainer";
+import { BaseUrl, ApiKey } from "@/constants/apiConstants";
 const schema = z
   .object({
     password: z
@@ -36,8 +37,8 @@ export default function FormResetPass() {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const baseUrl = BaseUrl;
+  const apiKey = ApiKey;
 
   useEffect(() => {
     const t =

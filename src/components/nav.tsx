@@ -23,8 +23,6 @@ export default function Nav() {
           setUser(JSON.parse(userInfo));
         } catch (error) {
           console.error("Failed to fetch user data:", error);
-        } finally {
-          console.log("done");
         }
       }
       getUserData();

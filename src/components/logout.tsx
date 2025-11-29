@@ -1,17 +1,17 @@
 "use Client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { getAccessToken } from "@/constants/token";
+import { BaseUrl, ApiKey } from "@/constants/apiConstants";
 import { useAppContext } from "@/app/context/cookiesContext";
 export default function Logout() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const router = useRouter();
   const { setCookiesStatue } = useAppContext();
-
+  const baseUrl = BaseUrl;
+  const apiKey = ApiKey;
   // Send a POST request
   async function out() {
-    const res = await fetch("/api/token");
-    const data = await res.json();
+    const accessToken = await getAccessToken();
     axios
       .post(
         `${baseUrl}/auth/v1/logout`,
@@ -19,7 +19,7 @@ export default function Logout() {
         {
           headers: {
             apikey: apiKey,
-            Authorization: `Bearer ${data.access}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       )

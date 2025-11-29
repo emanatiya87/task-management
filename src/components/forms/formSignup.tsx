@@ -10,6 +10,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { BaseUrl, ApiKey } from "@/constants/apiConstants";
+
 const schema = z
   .object({
     name: z
@@ -47,8 +49,9 @@ type IFormInput = z.infer<typeof schema>;
 export default function FormSignUp() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const baseUrl = BaseUrl;
+  const apiKey = ApiKey;
+
   const {
     register,
     handleSubmit,

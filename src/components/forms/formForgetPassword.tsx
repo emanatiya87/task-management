@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { BaseUrl, ApiKey } from "@/constants/apiConstants";
 
 const schema = z.object({
   email: z.string().email(),
@@ -13,9 +14,8 @@ const schema = z.object({
 type forgotPassEmail = z.infer<typeof schema>;
 
 export default function FormForgetPass() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-
+  const baseUrl = BaseUrl;
+  const apiKey = ApiKey;
   const [errorMsg, setErrorMsg] = useState("");
   const [confirmMsg, setConfirmMsg] = useState("");
   const [disableBtnreset, setDisableBtnreset] = useState(false);
