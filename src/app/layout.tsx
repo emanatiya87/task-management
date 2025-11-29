@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AppProvider } from "./context/cookiesContext";
 import { ThemeModeScript } from "flowbite-react";
-
 import LayoutClient from "@/components/layoutClient";
 export const metadata: Metadata = {
   title: "Task managemnet",
