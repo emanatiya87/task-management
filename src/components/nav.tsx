@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Dropdown from "./dropdown";
+import DropdownComponent from "./dropdown";
 import { DarkThemeToggle } from "flowbite-react";
 import { useAppContext } from "@/app/context/cookiesContext";
 type UserInfo = {
@@ -11,7 +11,6 @@ type UserInfo = {
 };
 
 export default function Nav() {
-  const [open, setOpen] = useState(false);
   const { cookiesStatue } = useAppContext();
   const [user, setUser] = useState<UserInfo | null>(null);
 
@@ -62,19 +61,7 @@ export default function Nav() {
                   {user.department}
                 </h6>
               </div>
-              <div className="relative">
-                <Image
-                  src="/user.png"
-                  alt="Profile"
-                  className="rounded-[50%] shadow-lg"
-                  width={30}
-                  height={20}
-                  onClick={() => setOpen((prev) => !prev)}
-                />
-                <div className="absolute top0 end-0">
-                  <Dropdown open={open} />
-                </div>
-              </div>
+              <DropdownComponent />
             </>
           ) : null}
         </div>
