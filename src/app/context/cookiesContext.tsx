@@ -10,7 +10,7 @@ type AppContextType = {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [cookiesStatue, setCookiesStatue] = useState(false);
+  const [cookiesStatue, setCookiesStatue] = useState(true);
 
   return (
     <AppContext.Provider value={{ cookiesStatue, setCookiesStatue }}>

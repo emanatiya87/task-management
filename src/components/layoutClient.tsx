@@ -23,20 +23,22 @@ export default function LayoutClient({ children }: LayoutClientProps) {
     })();
   }, [cookiesStatue]);
   return (
-    <div className="h-dvh fixed top-0 right-0 w-full">
+    <div className="flex flex-col min-h-screen">
       <Nav />
-      {token ? (
-        <>
-          <Sidebar open={open} setOpen={setOpen} />
-          <div
-            className={`${open ? "ml-16" : "ml-56"} mt-[60px] transition-all duration-300 h-full`}
-          >
-            {children}
-          </div>
-        </>
-      ) : (
-        <div className="mt-[60px] h-full">{children}</div>
-      )}
+      <div className="flex flex-1">
+        {token ? (
+          <>
+            <Sidebar open={open} setOpen={setOpen} />
+            <div
+              className={`${open ? "ml-16" : "ml-56"} mt-[60px] transition-all duration-300 flex-1`}
+            >
+              {children}
+            </div>
+          </>
+        ) : (
+          <div className="mt-[60px] flex-1 w-full">{children}</div>
+        )}
+      </div>
     </div>
   );
 }

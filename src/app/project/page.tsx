@@ -1,3 +1,58 @@
+"use client";
+import { Button } from "flowbite-react";
+import Link from "next/link";
+import ProjectCard from "@/components/projectCard";
+import { ApiKey, BaseUrl } from "@/constants/apiConstants";
+import { accessToken } from "@/constants/token";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 export default function ProjectList() {
-  return "hi";
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${BaseUrl}/rest/v1/rpc/get_projects`, {
+        headers: {
+          apikey: ApiKey,
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setProjects(res.data);
+      })
+      .catch((error) => {
+        console.log(error + "error");
+      });
+  }, []);
+  return (
+    <>
+      <h2 className="mb-3 text-gray-600  text-xl font-semibold">Projects</h2>
+      {projects ? (
+        <div className="border w-full flex flex-wrap  ">
+          {projects.map((project) => {
+            return (
+              <ProjectCard
+                key={project.id}
+                title={project.name}
+                description={project.description}
+                creationDate={project.created_at}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-3 w-full flex flex-col items-center justify-center gap-4 h-1/2">
+          <h2 className="textStyle text-2xl font-semibold">
+            You don't have any projects yet.
+          </h2>
+
+          <Button>
+            <Link href={"/project/add"}>Create Project</Link>
+          </Button>
+        </div>
+      )}
+    </>
+  );
 }
