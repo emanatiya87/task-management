@@ -6,9 +6,11 @@ import { ApiKey, BaseUrl } from "@/constants/apiConstants";
 import { accessToken } from "@/constants/token";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import Loading from "../loading";
+import { formatDate } from "@/utils/dateFormatter";
 export default function ProjectList() {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
       .get(`${BaseUrl}/rest/v1/rpc/get_projects`, {
@@ -24,20 +26,23 @@ export default function ProjectList() {
       })
       .catch((error) => {
         console.log(error + "error");
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
   return (
     <>
       <h2 className="mb-3 text-gray-600  text-xl font-semibold">Projects</h2>
-      {projects ? (
-        <div className="border w-full flex flex-wrap  ">
+      {loading ? (
+        <Loading />
+      ) : projects ? (
+        <div className=" w-full flex flex-wrap  ">
           {projects.map((project) => {
             return (
               <ProjectCard
                 key={project.id}
                 title={project.name}
                 description={project.description}
-                creationDate={project.created_at}
+                creationDate={formatDate(project.created_at)}
               />
             );
           })}
