@@ -8,8 +8,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { formatDate } from "@/utils/dateFormatter";
+interface ProjectType {
+  id: string;
+  name: string;
+  description: string;
+  created_at: string;
+}
 export default function ProjectList() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
@@ -21,7 +27,6 @@ export default function ProjectList() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setProjects(res.data);
       })
       .catch((error) => {
@@ -40,6 +45,7 @@ export default function ProjectList() {
             return (
               <ProjectCard
                 key={project.id}
+                id={project.id}
                 title={project.name}
                 description={project.description}
                 creationDate={formatDate(project.created_at)}

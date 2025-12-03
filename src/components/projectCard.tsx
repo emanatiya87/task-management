@@ -1,11 +1,14 @@
 import { Card } from "flowbite-react";
 import { FaEdit } from "react-icons/fa";
-
+import Link from "next/link";
+import { string } from "zod";
 export default function ProjectCard({
+  id,
   title,
   description,
   creationDate,
 }: {
+  id: string;
   title: string;
   description: string;
   creationDate: string;
@@ -17,7 +20,9 @@ export default function ProjectCard({
           <h4 className=" text-base font-bold text-gray-900 lg:text-xl dark:text-white">
             {title}
           </h4>
-          <FaEdit className="textStyle text-2xl cursor-pointer" />
+          <Link href={`/project/${id}/edit`}>
+            <FaEdit className="textStyle text-2xl cursor-pointer" />
+          </Link>
         </div>
         <hr />
         <p className="text-md mt-3 font-normal text-gray-800 dark:text-gray-400">
