@@ -25,7 +25,7 @@ export default function ProjectList() {
         setProjects(res.data);
       })
       .catch((error) => {
-        console.log(error + "error");
+        console.log("code" + error.status);
       })
       .finally(() => setLoading(false));
   }, []);
