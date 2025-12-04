@@ -3,11 +3,11 @@ import { Button } from "flowbite-react";
 import Link from "next/link";
 import ProjectCard from "@/components/projectCard";
 import { ApiKey, BaseUrl } from "@/constants/apiConstants";
-import { accessToken } from "@/constants/token";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { formatDate } from "@/utils/dateFormatter";
+import { accessToken } from "@/constants/token";
 interface ProjectType {
   id: string;
   name: string;
@@ -17,6 +17,13 @@ interface ProjectType {
 export default function ProjectList() {
   const [projects, setProjects] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState(true);
+  // if (!accessToken) {
+  //   return (
+  //     <p>
+  //       Not authenticated <Link href="/registration/login">Login</Link>
+  //     </p>
+  //   );
+  // }
   useEffect(() => {
     axios
       .get(`${BaseUrl}/rest/v1/rpc/get_projects`, {
@@ -30,7 +37,7 @@ export default function ProjectList() {
         setProjects(res.data);
       })
       .catch((error) => {
-        console.log("code" + error.status);
+        console.log("error: " + error);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -39,7 +46,7 @@ export default function ProjectList() {
       <h2 className="mb-3 text-gray-600  text-xl font-semibold">Projects</h2>
       {loading ? (
         <Loading />
-      ) : projects ? (
+      ) : projects.length > 0 ? (
         <div className=" w-full flex flex-wrap  ">
           {projects.map((project) => {
             return (

@@ -13,7 +13,11 @@ export default async function Edit({
   const accessToken = cookieStore.get("access_token")?.value;
 
   if (!accessToken) {
-    return <p>Not authenticated</p>;
+    return (
+      <p>
+        Not authenticated <Link href="/registration/login">Login</Link>
+      </p>
+    );
   }
 
   try {
