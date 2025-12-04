@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Counter } from "@/features/counter/example";
 export default function Home() {
   const router = useRouter();
   const [Msg, setMsg] = useState("");
@@ -22,6 +23,7 @@ export default function Home() {
       <Link href="/registration/signup"> signup</Link>
       <Link href="/project/add"> add project</Link>
       <h3 className="text-red-600">{Msg}</h3>
+      <Counter></Counter>
     </div>
   );
 }
