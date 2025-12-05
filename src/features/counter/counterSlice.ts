@@ -1,5 +1,3 @@
-// features/counter/counterSlice.ts
-// أزل "use client" من هنا أيضاً!
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
