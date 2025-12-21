@@ -7,7 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { formatDate } from "@/utils/dateFormatter";
-import { accessToken } from "@/constants/token";
+import { getAccessToken } from "@/constants/token";
 interface ProjectType {
   id: string;
   name: string;
@@ -24,22 +24,29 @@ export default function ProjectList() {
   //     </p>
   //   );
   // }
+
   useEffect(() => {
-    axios
-      .get(`${BaseUrl}/rest/v1/rpc/get_projects`, {
-        headers: {
-          apikey: ApiKey,
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        setProjects(res.data);
-      })
-      .catch((error) => {
-        console.log("error: " + error);
-      })
-      .finally(() => setLoading(false));
+    async function getProjects() {
+      const accessToken = await getAccessToken();
+      console.log(accessToken);
+      axios
+        .get(`${BaseUrl}/rest/v1/rpc/get_projects`, {
+          headers: {
+            apikey: ApiKey,
+            Authorization: `Bearer ${accessToken?.value}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setProjects(res.data);
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log("error: " + error.status);
+        })
+        .finally(() => setLoading(false));
+    }
+    getProjects();
   }, []);
   return (
     <>

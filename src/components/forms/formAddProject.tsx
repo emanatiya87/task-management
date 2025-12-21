@@ -7,7 +7,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiKey, BaseUrl } from "@/constants/apiConstants";
-import { accessToken } from "@/constants/token";
+import { getAccessToken } from "@/constants/token";
 import ToastComponent from "../toast";
 export default function FormAddProject() {
   const schema = z.object({
@@ -26,6 +26,7 @@ export default function FormAddProject() {
   const onSubmit: SubmitHandler<projectInput> = async (data) => {
     setErrorMsg("");
     // Send a POST request
+    const accessToken = await getAccessToken();
     axios
       .post(
         `${BaseUrl}/rest/v1/projects`,
@@ -36,7 +37,7 @@ export default function FormAddProject() {
         {
           headers: {
             apikey: ApiKey,
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken?.value}`,
             "Content-Type": "application/json",
           },
         }

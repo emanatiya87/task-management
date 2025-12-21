@@ -7,7 +7,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiKey, BaseUrl } from "@/constants/apiConstants";
-import { accessToken } from "@/constants/token";
+import { getAccessToken } from "@/constants/token";
 import ToastComponent from "../toast";
 import Link from "next/link";
 interface ProjectType {
@@ -38,6 +38,7 @@ export default function FormEditProject({ project }: { project: ProjectType }) {
   const onSubmit: SubmitHandler<projectInput> = async (data) => {
     setErrorMsg("");
     // Send a POST request
+    const accessToken = await getAccessToken();
     axios
       .patch(
         `${BaseUrl}/rest/v1/projects?id=eq.${project.id}`,
@@ -48,7 +49,7 @@ export default function FormEditProject({ project }: { project: ProjectType }) {
         {
           headers: {
             apikey: ApiKey,
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken?.value}`,
             "Content-Type": "application/json",
           },
         }

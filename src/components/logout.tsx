@@ -3,10 +3,10 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getAccessToken } from "@/constants/token";
 import { BaseUrl, ApiKey } from "@/constants/apiConstants";
-import { useAppContext } from "@/app/context/cookiesContext";
+import { useSelector, useDispatch } from "react-redux";
+import { setCookiesStatue } from "@/features/cookiesStatue/cookiesStatueSlice";
 export default function Logout() {
   const router = useRouter();
-  const { setCookiesStatue } = useAppContext();
   const baseUrl = BaseUrl;
   const apiKey = ApiKey;
   // Send a POST request
@@ -26,6 +26,7 @@ export default function Logout() {
       .then((response) => {
         console.log("Logged out: ", response);
         setCookiesStatue(false);
+        // to do in funciton , use await
         router.push("/");
       })
       .then(() => fetch("/api/logout"))
