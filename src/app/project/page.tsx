@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { formatDate } from "@/utils/dateFormatter";
 import { getAccessToken } from "@/constants/token";
+import { useRouter } from "next/navigation";
 interface ProjectType {
   id: string;
   name: string;
@@ -17,14 +18,7 @@ interface ProjectType {
 export default function ProjectList() {
   const [projects, setProjects] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState(true);
-  // if (!accessToken) {
-  //   return (
-  //     <p>
-  //       Not authenticated <Link href="/registration/login">Login</Link>
-  //     </p>
-  //   );
-  // }
-
+  const router = useRouter();
   useEffect(() => {
     async function getProjects() {
       const accessToken = await getAccessToken();
@@ -43,6 +37,9 @@ export default function ProjectList() {
         })
         .catch((error) => {
           console.log("error: " + error.status);
+          if (error.status == 401) {
+            router.push("/registration/login");
+          }
         })
         .finally(() => setLoading(false));
     }
