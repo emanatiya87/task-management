@@ -10,6 +10,7 @@ import { ApiKey, BaseUrl } from "@/constants/apiConstants";
 import { getAccessToken } from "@/constants/token";
 import ToastComponent from "../toast";
 import Link from "next/link";
+import useProjectMembers from "@/functions/useProjectMembers";
 interface ProjectType {
   id: string;
   name: string;
@@ -18,6 +19,7 @@ interface ProjectType {
   deadline: string;
 }
 export default function FormAddEpic({ project }: { project: ProjectType }) {
+  const { members, loading, error } = useProjectMembers(project.id);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const schema = z.object({
@@ -32,6 +34,7 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
         return selectedDate >= today;
       }, "Deadline must be today or in the future")
       .optional(),
+    assignee_id: z.string().optional(),
   });
   type projectInput = z.infer<typeof schema>;
   const [errorMsg, setErrorMsg] = useState("");
@@ -44,7 +47,6 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
     resolver: zodResolver(schema),
   });
   const onSubmit: SubmitHandler<projectInput> = async (data) => {
-    console.log(data);
     setErrorMsg("");
     // Send a POST request
     const accessToken = await getAccessToken();
@@ -54,9 +56,9 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
         {
           title: data.name,
           description: data.description,
-          assignee_id: "06dfc57d-4321-4776-8e41-964236f45302",
+          assignee_id: data.assignee_id,
           project_id: project.id,
-          deadline: data.deadline,
+          deadline: data.deadline || null,
         },
         {
           headers: {
@@ -108,6 +110,38 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
             {errors.description && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.description.message}
+              </p>
+            )}
+          </div>
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="assignee_id">Assign To</Label>
+            </div>
+
+            <select
+              id="assignee_id"
+              className="block w-[50%] px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+              defaultValue=""
+              {...register("assignee_id")}
+            >
+              <option hidden value="">
+                Choose a member
+              </option>
+              {loading ? (
+                <option>loading...</option>
+              ) : (
+                members.map((member, index) => {
+                  return (
+                    <option key={index} value={member.user_id}>
+                      {member.metadata?.name}
+                    </option>
+                  );
+                })
+              )}
+            </select>
+            {errors.assignee_id && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.assignee_id.message}
               </p>
             )}
           </div>

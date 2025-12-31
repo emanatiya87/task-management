@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { getAccessToken } from "@/constants/token";
 import { BaseUrl, ApiKey } from "@/constants/apiConstants";
 import { useSelector, useDispatch } from "react-redux";
-import { setCookiesStatue } from "@/features/cookiesStatue/cookiesStatueSlice";
+// import { setCookiesStatue } from "@/features/cookiesStatue/cookiesStatueSlice";
 export default function Logout() {
   const router = useRouter();
   const baseUrl = BaseUrl;
