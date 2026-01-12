@@ -10,8 +10,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import PasswordContainer from "../passwordContainer";
-import { useAppContext } from "@/app/context/cookiesContext";
-
+import { useDispatch } from "react-redux";
+import type { RootState } from "@/app/store";
+import { setIsLogin } from "@/features/isLogin/isLogin";
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(1, "Password is required"),
@@ -22,7 +23,7 @@ type LogInput = z.infer<typeof schema>;
 export default function FormLogin() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
-  const { setCookiesStatue } = useAppContext();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -41,7 +42,7 @@ export default function FormLogin() {
       .then((response) => {
         reset();
         router.push("/dashboard");
-        setCookiesStatue(true);
+        dispatch(setIsLogin(true));
       })
       .catch((error) => {
         setErrorMsg(error.response?.data?.error || "invalid email or password");
@@ -50,7 +51,6 @@ export default function FormLogin() {
 
   return (
     <>
-      {" "}
       <form className="mt-3 mx-auto w-[85%]" onSubmit={handleSubmit(onSubmit)}>
         <InputDiv
           type="text"

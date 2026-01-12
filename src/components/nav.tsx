@@ -4,18 +4,18 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DropdownComponent from "./dropdown";
 import { DarkThemeToggle } from "flowbite-react";
-import { useAppContext } from "@/app/context/cookiesContext";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
 type UserInfo = {
   name?: string;
   department?: string;
 };
 
 export default function Nav() {
-  const { cookiesStatue } = useAppContext();
   const [user, setUser] = useState<UserInfo | null>(null);
-
+  const isLoginValue = useSelector((state: RootState) => state.isLogin.value);
   useEffect(() => {
-    if (cookiesStatue) {
+    if (isLoginValue) {
       async function getUserData() {
         try {
           const res = await fetch("/api/userData");
@@ -29,7 +29,7 @@ export default function Nav() {
     } else {
       setUser(null);
     }
-  }, [cookiesStatue]);
+  }, [isLoginValue]);
 
   return (
     <nav className="bg-white border-gray-900 dark:bg-gray-900 py-2 px-3 shadow-md h-[60px] fixed top-0 right-0 left-0">
@@ -50,7 +50,7 @@ export default function Nav() {
           </span>
         </Link>
         <DarkThemeToggle className="bg-white" />
-        <div className={cookiesStatue ? `flex gap-2 items-center` : "hidden"}>
+        <div className={isLoginValue ? `flex gap-2 items-center` : "hidden"}>
           {user ? (
             <>
               <div className="flex flex-col items-end">

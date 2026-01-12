@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AppProvider } from "./context/cookiesContext";
 import { ThemeModeScript } from "flowbite-react";
 import LayoutClient from "@/components/layoutClient";
 import { StoreProvider } from "../app/storeProvider";
@@ -20,9 +19,7 @@ export default function RootLayout({
       </head>
       <body>
         <StoreProvider>
-          <AppProvider>
-            <LayoutClient>{children}</LayoutClient>
-          </AppProvider>
+          <LayoutClient>{children}</LayoutClient>
         </StoreProvider>
       </body>
     </html>

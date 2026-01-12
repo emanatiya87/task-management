@@ -2,8 +2,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Counter } from "@/features/counter/example";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "./store";
+import { setIsLogin } from "@/features/isLogin/isLogin";
 export default function Home() {
+  const isLoginValue = useSelector((state: RootState) => state.isLogin.value);
+  const dispatch = useDispatch();
   const router = useRouter();
   const [Msg, setMsg] = useState("");
   useEffect(() => {
@@ -23,7 +27,13 @@ export default function Home() {
       <Link href="/registration/signup"> signup</Link>
       <Link href="/project/add"> add project</Link>
       <h3 className="text-red-600">{Msg}</h3>
-      <Counter></Counter>
+      <h2>logged in?: {isLoginValue ? "yes" : "no"}</h2>
+      <button
+        aria-label="Increment value"
+        onClick={() => dispatch(setIsLogin(false))}
+      >
+        isLogin?
+      </button>
     </div>
   );
 }

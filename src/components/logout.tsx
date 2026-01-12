@@ -3,9 +3,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getAccessToken } from "@/constants/token";
 import { BaseUrl, ApiKey } from "@/constants/apiConstants";
-import { useSelector, useDispatch } from "react-redux";
-// import { setCookiesStatue } from "@/features/cookiesStatue/cookiesStatueSlice";
+import { useDispatch } from "react-redux";
+import { setIsLogin } from "@/features/isLogin/isLogin";
+
 export default function Logout() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const baseUrl = BaseUrl;
   const apiKey = ApiKey;
@@ -19,15 +21,15 @@ export default function Logout() {
         {
           headers: {
             apikey: apiKey,
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken?.value}`,
           },
         }
       )
       .then((response) => {
         console.log("Logged out: ", response);
-        setCookiesStatue(false);
-        // to do in funciton , use await
-        router.push("/");
+        dispatch(setIsLogin(false));
+        // // to do in funciton , use await
+        // router.push("/");
       })
       .then(() => fetch("/api/logout"))
       .catch((error) => {

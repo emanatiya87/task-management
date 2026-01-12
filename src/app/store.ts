@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
+import isLoginReducer from "../features/isLogin/isLogin";
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      counter: counterReducer,
+      isLogin: isLoginReducer,
     },
   });
 };
