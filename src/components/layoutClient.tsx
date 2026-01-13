@@ -2,7 +2,7 @@
 import Sidebar from "@/components/sidebar";
 import Nav from "@/components/nav";
 import { useSelector } from "react-redux";
-import type { RootState } from "@/app/store";
+import type { RootState } from "@/state/store";
 import { useState } from "react";
 interface LayoutClientProps {
   children: React.ReactNode;

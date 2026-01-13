@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import DropdownComponent from "./dropdown";
 import { DarkThemeToggle } from "flowbite-react";
 import { useSelector } from "react-redux";
-import type { RootState } from "@/app/store";
+import type { RootState } from "@/state/store";
 type UserInfo = {
   name?: string;
   department?: string;

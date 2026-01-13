@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { getAccessToken } from "@/constants/token";
 import { BaseUrl, ApiKey } from "@/constants/apiConstants";
 import { useDispatch } from "react-redux";
-import { setIsLogin } from "@/features/isLogin/isLogin";
+import { setIsLogin } from "@/state/features/isLogin/isLogin";
 
 export default function Logout() {
   const dispatch = useDispatch();

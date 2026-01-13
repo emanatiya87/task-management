@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import isLoginReducer from "../features/isLogin/isLogin";
+import isLoginReducer from "./features/isLogin/isLogin";
 export const makeStore = () => {
   return configureStore({
     reducer: {

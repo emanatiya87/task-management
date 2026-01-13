@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "./store";
+import type { RootState } from "../state/store";
 export default function Home() {
   const isLoginValue = useSelector((state: RootState) => state.isLogin.value);
   const dispatch = useDispatch();
