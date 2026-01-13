@@ -6,7 +6,7 @@ export interface isLogin {
 }
 
 const initialState: isLogin = {
-  value: true,
+  value: false,
 };
 
 export const isLoginSlice = createSlice({

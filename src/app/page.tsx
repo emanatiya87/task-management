@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../state/store";
+import { setIsLogin } from "@/state/features/isLogin/isLogin";
+import { getAccessToken } from "@/constants/token";
 export default function Home() {
   const isLoginValue = useSelector((state: RootState) => state.isLogin.value);
   const dispatch = useDispatch();
@@ -19,6 +21,15 @@ export default function Home() {
       sessionStorage.setItem("hashToken", token);
       setMsg("Invalid or expired reset link.");
     }
+    // check islogin every refresh
+    (async function checkIsLogin() {
+      const access_token = await getAccessToken();
+      if (access_token?.value) {
+        dispatch(setIsLogin(true));
+      } else {
+        dispatch(setIsLogin(false));
+      }
+    })();
   }, []);
 
   return (
