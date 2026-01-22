@@ -1,31 +1,31 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+const protectedRoutes = ["/dashboard", "/project"];
 
-export async function middleware(request: NextRequest) {
-  const accessToken = request.cookies.get("access_token")?.value;
-  const refreshToken = request.cookies.get("refresh_token")?.value;
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  if (!accessToken && refreshToken) {
-    const refreshRes = await fetch(
-      `${request.nextUrl.origin}/api/auth/refresh`,
-      {
-        method: "POST",
-        headers: { Cookie: request.headers.get("cookie") || "" },
-      }
-    );
+  // token من الكوكيز
+  const token = request.cookies.get("access_token")?.value;
 
-    if (refreshRes.ok) {
-      return NextResponse.next();
-    }
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route),
+  );
+
+  const isAuthRoute = pathname.startsWith("/registration");
+
+  // 🚫 مش مسجل دخول + route محمي
+  if (!token && isProtectedRoute) {
+    return NextResponse.redirect(new URL("/registration/login", request.url));
   }
 
-  if (!accessToken && !refreshToken) {
-    return NextResponse.redirect(new URL("/registration/login", request.url));
+  // 🚫 مسجل دخول + رايح login أو signup
+  if (token && isAuthRoute) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/project/:path*", "/registration/:path*"],
 };
