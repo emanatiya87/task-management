@@ -4,7 +4,6 @@ const protectedRoutes = ["/dashboard", "/project"];
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // token من الكوكيز
   const token = request.cookies.get("access_token")?.value;
 
   const isProtectedRoute = protectedRoutes.some((route) =>
@@ -13,12 +12,12 @@ export function middleware(request: NextRequest) {
 
   const isAuthRoute = pathname.startsWith("/registration");
 
-  // 🚫 مش مسجل دخول + route محمي
+  // if user not loggedin
   if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/registration/login", request.url));
   }
 
-  // 🚫 مسجل دخول + رايح login أو signup
+  // is user logged in
   if (token && isAuthRoute) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
