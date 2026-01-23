@@ -11,6 +11,8 @@ import { getAccessToken } from "@/constants/token";
 import ToastComponent from "../toast";
 import Link from "next/link";
 import useProjectMembers from "@/functions/useProjectMembers";
+import apiClient from "@/lib/apiClient";
+
 interface ProjectType {
   id: string;
   name: string;
@@ -49,35 +51,20 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
   const onSubmit: SubmitHandler<projectInput> = async (data) => {
     setErrorMsg("");
     // Send a POST request
-    const accessToken = await getAccessToken();
-    axios
-      .post(
-        `${BaseUrl}/rest/v1/epics`,
-        {
-          title: data.name,
-          description: data.description,
-          assignee_id: data.assignee_id,
-          project_id: project.id,
-          deadline: data.deadline || null,
-        },
-        {
-          headers: {
-            apikey: ApiKey,
-            Authorization: `Bearer ${accessToken?.value}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        setAddedSuccessfully(true);
-        // Auto hide after 3 seconds
-        setTimeout(() => {
-          setAddedSuccessfully(false);
-        }, 3000);
-      })
-      .catch((error) => {
-        setErrorMsg("Failed to add epic" + error);
+    try {
+      await apiClient.post("/rest/v1/epics", {
+        title: data.name,
+        description: data.description,
+        assignee_id: data.assignee_id,
+        project_id: project.id,
+        deadline: data.deadline || null,
       });
+
+      setAddedSuccessfully(true);
+      setTimeout(() => setAddedSuccessfully(false), 3000);
+    } catch (error) {
+      setErrorMsg("Failed to add epic: ");
+    }
   };
   return (
     <>
