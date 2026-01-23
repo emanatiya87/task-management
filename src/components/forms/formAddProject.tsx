@@ -26,7 +26,7 @@ export default function FormAddProject() {
     // Send a POST request
     {
       try {
-        await apiClient.post("/rest/v1/epics", {
+        await apiClient.post("/rest/v1/projects", {
           name: data.name,
           description: data.description,
         });
