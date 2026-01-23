@@ -2,13 +2,11 @@
 import { useState } from "react";
 import { Label, TextInput } from "flowbite-react";
 import { Button } from "flowbite-react";
-import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiKey, BaseUrl } from "@/constants/apiConstants";
-import { getAccessToken } from "@/constants/token";
 import ToastComponent from "../toast";
+import apiClient from "@/lib/apiClient";
 export default function FormAddProject() {
   const schema = z.object({
     name: z.string().min(3),
@@ -26,33 +24,22 @@ export default function FormAddProject() {
   const onSubmit: SubmitHandler<projectInput> = async (data) => {
     setErrorMsg("");
     // Send a POST request
-    const accessToken = await getAccessToken();
-    axios
-      .post(
-        `${BaseUrl}/rest/v1/projects`,
-        {
+    {
+      try {
+        await apiClient.post("/rest/v1/epics", {
           name: data.name,
           description: data.description,
-        },
-        {
-          headers: {
-            apikey: ApiKey,
-            Authorization: `Bearer ${accessToken?.value}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then(() => {
+        });
         reset();
         setAddedSuccessfully(true);
         // Auto hide after 3 seconds
         setTimeout(() => {
           setAddedSuccessfully(false);
         }, 3000);
-      })
-      .catch((error) => {
-        setErrorMsg("Failed to create project " + error);
-      });
+      } catch (error) {
+        setErrorMsg("Failed to create project: ");
+      }
+    }
   };
   return (
     <>
