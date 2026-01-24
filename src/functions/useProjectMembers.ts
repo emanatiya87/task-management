@@ -12,6 +12,7 @@ interface MemberType {
   metadata?: {
     name: string;
   };
+  member_id: string;
 }
 
 export default function useProjectMembers(projectId: string) {
@@ -40,7 +41,7 @@ export default function useProjectMembers(projectId: string) {
               Authorization: `Bearer ${accessToken.value}`,
               "Content-Type": "application/json",
             },
-          }
+          },
         );
 
         setMembers(response.data);
@@ -48,7 +49,7 @@ export default function useProjectMembers(projectId: string) {
       } catch (error) {
         console.error("Error fetching project members:", error);
         setError(
-          error instanceof Error ? error.message : "Failed to fetch members"
+          error instanceof Error ? error.message : "Failed to fetch members",
         );
         setMembers([]);
       } finally {
