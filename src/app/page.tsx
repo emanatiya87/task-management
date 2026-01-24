@@ -2,13 +2,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../state/store";
-import { setIsLogin } from "@/state/features/auth/authSlice";
-import { getAccessToken } from "@/constants/token";
 export default function Home() {
   const isLoginValue = useSelector((state: RootState) => state.isLogin.value);
-  const dispatch = useDispatch();
   const router = useRouter();
   const [Msg, setMsg] = useState("");
   useEffect(() => {
@@ -17,19 +14,9 @@ export default function Home() {
     const token = params.get("access_token");
     if (token) {
       router.push("/registration/reset-password");
-      console.log("yes");
       sessionStorage.setItem("hashToken", token);
       setMsg("Invalid or expired reset link.");
     }
-    // check islogin every refresh
-    (async function checkIsLogin() {
-      const access_token = await getAccessToken();
-      if (access_token?.value) {
-        dispatch(setIsLogin(true));
-      } else {
-        dispatch(setIsLogin(false));
-      }
-    })();
   }, []);
 
   return (
