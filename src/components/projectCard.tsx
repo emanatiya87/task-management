@@ -1,7 +1,7 @@
 import { Card } from "flowbite-react";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
-import { string } from "zod";
+import { FaTasks } from "react-icons/fa";
 export default function ProjectCard({
   id,
   title,
@@ -25,9 +25,17 @@ export default function ProjectCard({
           </Link>
         </div>
         <hr />
-        <p className="text-md mt-3 font-normal text-gray-800 dark:text-gray-400">
-          {description}
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-md mt-3 font-normal text-gray-800 dark:text-gray-400">
+            {description}
+          </p>
+          <p>
+            <Link href={`/project/${id}/epics`}>
+              <FaTasks />
+            </Link>
+          </p>
+        </div>
+
         <p className="text-md mt-3 font-normal text-red-600">
           Created At:{creationDate}
         </p>
