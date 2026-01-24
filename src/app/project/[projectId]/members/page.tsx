@@ -51,7 +51,9 @@ export default function projectMembers({
           <Members projectId={projectId} />
         </>
       ) : (
-        <>no</>
+        <>
+          <p className=" text-red-700">Error accourd</p>
+        </>
       )}
     </>
   );
