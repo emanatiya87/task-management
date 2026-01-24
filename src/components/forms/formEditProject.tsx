@@ -52,7 +52,7 @@ export default function FormEditProject({ project }: { project: ProjectType }) {
             Authorization: `Bearer ${accessToken?.value}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       )
       .then(() => {
         setAddedSuccessfully(true);
