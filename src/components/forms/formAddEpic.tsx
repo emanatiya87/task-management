@@ -33,7 +33,7 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
         return selectedDate >= today;
       }, "Deadline must be today or in the future")
       .optional(),
-    assignee_id: z.string().optional(),
+    assignee_id: z.string(),
   });
   type projectInput = z.infer<typeof schema>;
   const [errorMsg, setErrorMsg] = useState("");
