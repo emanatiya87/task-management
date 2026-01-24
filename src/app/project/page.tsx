@@ -20,9 +20,9 @@ export default function ProjectList() {
       try {
         const res = await apiClient.get("/rest/v1/rpc/get_projects");
         setProjects(res.data);
-        setLoading(false);
       } catch (error) {
         console.log(error);
+      } finally {
         setLoading(false);
       }
     }
