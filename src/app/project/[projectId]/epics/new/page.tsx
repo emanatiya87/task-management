@@ -25,7 +25,6 @@ export default function AddEpic({
       try {
         const res = await apiClient.get(`/rest/v1/projects?id=eq.${projectId}`);
         setProjects(res.data);
-        console.log(res);
       } catch (error) {
         console.log(error);
       } finally {
