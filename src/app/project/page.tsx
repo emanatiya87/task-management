@@ -2,13 +2,10 @@
 import { Button } from "flowbite-react";
 import Link from "next/link";
 import ProjectCard from "@/components/projectCard";
-import { ApiKey, BaseUrl } from "@/constants/apiConstants";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { formatDate } from "@/utils/dateFormatter";
-import { getAccessToken } from "@/constants/token";
-import { useRouter } from "next/navigation";
+import apiClient from "@/lib/apiClient";
 interface ProjectType {
   id: string;
   name: string;
@@ -18,30 +15,16 @@ interface ProjectType {
 export default function ProjectList() {
   const [projects, setProjects] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
   useEffect(() => {
     async function getProjects() {
-      const accessToken = await getAccessToken();
-      console.log(accessToken);
-      axios
-        .get(`${BaseUrl}/rest/v1/rpc/get_projects`, {
-          headers: {
-            apikey: ApiKey,
-            Authorization: `Bearer ${accessToken?.value}`,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          setProjects(res.data);
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log("error: " + error.status);
-          if (error.status == 401) {
-            router.push("/registration/login");
-          }
-        })
-        .finally(() => setLoading(false));
+      try {
+        const res = await apiClient.get("/rest/v1/rpc/get_projects");
+        setProjects(res.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     }
     getProjects();
   }, []);
