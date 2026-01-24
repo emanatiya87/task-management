@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { getAccessToken } from "@/constants/token";
-import { ApiKey, BaseUrl } from "@/constants/apiConstants";
+import apiClient from "@/lib/apiClient";
 
 interface MemberType {
   user_id: string;
@@ -27,23 +25,10 @@ export default function useProjectMembers(projectId: string) {
     async function getMembers() {
       try {
         setLoading(true);
-        const accessToken = await getAccessToken();
 
-        if (!accessToken?.value) {
-          throw new Error("No access token available");
-        }
-
-        const response = await axios.get(
-          `${BaseUrl}/rest/v1/get_project_members?project_id=eq.${projectId}`,
-          {
-            headers: {
-              apikey: ApiKey,
-              Authorization: `Bearer ${accessToken.value}`,
-              "Content-Type": "application/json",
-            },
-          },
+        const response = await apiClient.get(
+          `/rest/v1/get_project_members?project_id=eq.${projectId}`,
         );
-
         setMembers(response.data);
         setError(null);
       } catch (error) {
