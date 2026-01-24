@@ -2,14 +2,12 @@
 import { useState } from "react";
 import { Label, TextInput } from "flowbite-react";
 import { Button } from "flowbite-react";
-import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiKey, BaseUrl } from "@/constants/apiConstants";
-import { getAccessToken } from "@/constants/token";
 import ToastComponent from "../toast";
 import Link from "next/link";
+import apiClient from "@/lib/apiClient";
 interface ProjectType {
   id: string;
   name: string;
@@ -38,32 +36,19 @@ export default function FormEditProject({ project }: { project: ProjectType }) {
   const onSubmit: SubmitHandler<projectInput> = async (data) => {
     setErrorMsg("");
     // Send a POST request
-    const accessToken = await getAccessToken();
-    axios
-      .patch(
-        `${BaseUrl}/rest/v1/projects?id=eq.${project.id}`,
-        {
-          name: data.name,
-          description: data.description,
-        },
-        {
-          headers: {
-            apikey: ApiKey,
-            Authorization: `Bearer ${accessToken?.value}`,
-            "Content-Type": "application/json",
-          },
-        },
-      )
-      .then(() => {
-        setAddedSuccessfully(true);
-        // Auto hide after 3 seconds
-        setTimeout(() => {
-          setAddedSuccessfully(false);
-        }, 3000);
-      })
-      .catch((error) => {
-        setErrorMsg("Failed to edit project " + error);
+    try {
+      await apiClient.patch(`/rest/v1/projects?id=eq.${project.id}`, {
+        name: data.name,
+        description: data.description,
       });
+      setAddedSuccessfully(true);
+      // Auto hide after 3 seconds
+      setTimeout(() => {
+        setAddedSuccessfully(false);
+      }, 3000);
+    } catch (error) {
+      setErrorMsg("Failed to edit project " + error);
+    }
   };
   return (
     <>
