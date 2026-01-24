@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { getAccessToken } from "@/constants/token";
 import { BaseUrl, ApiKey } from "@/constants/apiConstants";
 import { useDispatch } from "react-redux";
-import { setIsLogin } from "@/state/features/isLogin/isLogin";
+import { setIsLogin } from "@/state/features/auth/authSlice";
 
 export default function Logout() {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export default function Logout() {
             apikey: apiKey,
             Authorization: `Bearer ${accessToken?.value}`,
           },
-        }
+        },
       )
       .then((response) => {
         console.log("Logged out: ", response);

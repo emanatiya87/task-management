@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import PasswordContainer from "../passwordContainer";
 import { useDispatch } from "react-redux";
 import type { RootState } from "@/state/store";
-import { setIsLogin } from "@/state/features/isLogin/isLogin";
+import { setIsLogin } from "@/state/features/auth/authSlice";
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(1, "Password is required"),

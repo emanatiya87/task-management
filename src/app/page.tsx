@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../state/store";
-import { setIsLogin } from "@/state/features/isLogin/isLogin";
+import { setIsLogin } from "@/state/features/auth/authSlice";
 import { getAccessToken } from "@/constants/token";
 export default function Home() {
   const isLoginValue = useSelector((state: RootState) => state.isLogin.value);

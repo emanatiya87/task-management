@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import isLoginReducer from "./features/isLogin/isLogin";
+import authReducer from "./features/auth/authSlice";
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      isLogin: isLoginReducer,
+      isLogin: authReducer,
     },
   });
 };
