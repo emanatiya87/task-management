@@ -33,7 +33,7 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
         return selectedDate >= today;
       }, "Deadline must be today or in the future")
       .optional(),
-    assignee_id: z.string(),
+    assignee_id: z.string().optional(),
   });
   type projectInput = z.infer<typeof schema>;
   const [errorMsg, setErrorMsg] = useState("");
@@ -52,7 +52,7 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
       await apiClient.post("/rest/v1/epics", {
         title: data.name,
         description: data.description,
-        assignee_id: data.assignee_id,
+        assignee_id: data.assignee_id || null,
         project_id: project.id,
         deadline: data.deadline || null,
       });
