@@ -36,6 +36,7 @@ export default function EpicPopup({
   const [epic, setEpic] = useState<ProjectType | null>(null);
   useEffect(() => {
     async function getEpics() {
+      if (!open) return;
       try {
         const res = await apiClient.get(
           `/rest/v1/project_epics?project_id=eq.${projectId}&id=eq.${epicId}`,
@@ -89,9 +90,7 @@ export default function EpicPopup({
                   <SlCalender className="text-gray-700" />
                   <span>Created At </span>
                 </p>
-                <p>
-                  {epic ? formatDate(epic.created_at) : "not detrmined yet"}
-                </p>
+                <p>{epic ? formatDate(epic.created_at) : ""}</p>
               </div>
               <hr className="text-gray-400 my-3.5" />
               <h3 className=" mb-5 font-semibold textStyle">Description</h3>
