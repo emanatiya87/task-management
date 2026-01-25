@@ -41,6 +41,8 @@ export default function EpicPopup({
   useEffect(() => {
     async function getEpics() {
       if (!openModalValue) return;
+      setLoading(true);
+      setEpic(null);
       try {
         const res = await apiClient.get(
           `/rest/v1/project_epics?project_id=eq.${projectId}&id=eq.${epicId}`,
