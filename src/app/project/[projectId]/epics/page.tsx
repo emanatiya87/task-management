@@ -8,10 +8,10 @@ import { FaEllipsisVertical } from "react-icons/fa6";
 import { formatDate } from "@/utils/dateFormatter";
 import Loading from "@/app/loading";
 import { Button } from "flowbite-react";
+import Avatar from "@/components/avatar";
 import apiClient from "@/lib/apiClient";
 import EpicPopup from "@/components/epicDetailsPopup";
-import type { RootState } from "@/state/store";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setIsOpenEpicDetailsModal } from "@/state/features/epicDetailsModal/epicDetailsModalSlice";
 interface ProjectType {
   id: string;
@@ -91,22 +91,17 @@ export default function Epics({
                         <SlCalender /> <p>{formatDate(epic.created_at)}</p>
                       </div>
                     </div>
-                    <div className="flex gap-0.5">
-                      <Image
-                        src="/user.png"
-                        alt="userimg"
-                        className="rounded-[50%] shadow-lg"
-                        width={30}
-                        height={20}
-                      />
-                      {epic?.assignee?.name ? (
+                    {epic?.assignee?.name ? (
+                      <div className="flex gap-0.5 items-center ">
+                        <Avatar name={epic?.assignee?.name} />
                         <p className="textStyle font-semibold">
                           {epic?.assignee?.name}
                         </p>
-                      ) : (
-                        <p className="textStyle font-semibold">Unassigned</p>
-                      )}
-                    </div>
+                      </div>
+                    ) : (
+                      <p className="textStyle font-semibold">Unassigned</p>
+                    )}
+
                     <FaEllipsisVertical className="cursor-pointer textStyle" />
                   </div>
                 ))}

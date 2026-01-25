@@ -1,11 +1,11 @@
 "use client";
 import { Dropdown, DropdownItem } from "flowbite-react";
-import Image from "next/image";
 import { Button } from "flowbite-react";
 import Link from "next/link";
 import Loading from "@/app/loading";
 import { HiChevronDown } from "react-icons/hi";
 import useProjectMembers from "@/functions/useProjectMembers";
+import Avatar from "./avatar";
 
 export default function Members({ projectId }: { projectId: string }) {
   const { members, loading, error } = useProjectMembers(projectId);
@@ -37,13 +37,7 @@ export default function Members({ projectId }: { projectId: string }) {
               key={member.member_id}
             >
               <div className="flex gap-2 items-center">
-                <Image
-                  src="/user.png"
-                  alt="Profile"
-                  className="rounded-[50%] shadow-lg"
-                  width={30}
-                  height={20}
-                />
+                <Avatar name={member.metadata?.name || "?"} />
                 <div className="flex flex-col items-start">
                   <h5 className="text-lg font-medium textStyle">
                     {member.metadata?.name}

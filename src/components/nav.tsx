@@ -1,10 +1,10 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DropdownComponent from "./dropdown";
 import { DarkThemeToggle } from "flowbite-react";
 import { useSelector } from "react-redux";
+import Avatar from "./avatar";
 import type { RootState } from "@/state/store";
 type UserInfo = {
   name?: string;
@@ -38,13 +38,7 @@ export default function Nav() {
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse "
         >
-          <Image
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-            width={30}
-            height={30}
-          />
+          <Avatar name="Task Management" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white hidden sm:block">
             AProjectO
           </span>
@@ -59,7 +53,7 @@ export default function Nav() {
                   {user.department}
                 </h6>
               </div>
-              <DropdownComponent />
+              <DropdownComponent name={user.name || "?"} />
             </>
           ) : null}
         </div>
