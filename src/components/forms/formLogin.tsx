@@ -41,7 +41,7 @@ export default function FormLogin() {
       })
       .then((response) => {
         reset();
-        router.push("/dashboard");
+        router.push("/project");
         dispatch(setIsLogin(true));
       })
       .catch((error) => {
