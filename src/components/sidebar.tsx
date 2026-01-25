@@ -7,11 +7,16 @@ import { IoSettings } from "react-icons/io5";
 import Link from "next/link";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { MdArrowRight } from "react-icons/md";
+import { LiaUsersCogSolid } from "react-icons/lia";
+import { useParams } from "next/navigation";
+
 interface SidebarProps {
   open: boolean;
   setOpen: (value: boolean | ((prev: boolean) => boolean)) => void;
 }
 export default function Sidebar({ open, setOpen }: SidebarProps) {
+  const params = useParams();
+  const projectId = params?.projectId as string | undefined;
   return (
     <aside
       id="default-sidebar"
@@ -40,25 +45,42 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
               <span className={`ms-3 ${open && "hidden"}`}>Project</span>
             </Link>
           </li>
-          <li>
-            <Link
-              href="/"
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <IoMdPhotos className="iconsStyle" />
-              <span className={`ms-3 ${open && "hidden"}`}>Tasks</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/"
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <LuLogs className="iconsStyle" />
+          {projectId ? (
+            <>
+              <li>
+                <Link
+                  href={`/project/${projectId}/epics`}
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <LuLogs className="iconsStyle" />
 
-              <span className={`ms-3 ${open && "hidden"}`}>Work Logs</span>
-            </Link>
-          </li>
+                  <span className={`ms-3 ${open && "hidden"}`}>Epics</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <IoMdPhotos className="iconsStyle" />
+                  <span className={`ms-3 ${open && "hidden"}`}>Tasks</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/project/${projectId}/members`}
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <LiaUsersCogSolid className="iconsStyle" />
+                  <span className={`ms-3 ${open && "hidden"}`}>
+                    Project members
+                  </span>
+                </Link>
+              </li>
+            </>
+          ) : (
+            <></>
+          )}
           <li>
             <Link
               href="/"
