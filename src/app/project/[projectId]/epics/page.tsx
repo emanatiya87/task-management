@@ -10,6 +10,9 @@ import Loading from "@/app/loading";
 import { Button } from "flowbite-react";
 import apiClient from "@/lib/apiClient";
 import EpicPopup from "@/components/epicDetailsPopup";
+import type { RootState } from "@/state/store";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsOpenEpicDetailsModal } from "@/state/features/epicDetailsModal/epicDetailsModalSlice";
 interface ProjectType {
   id: string;
   epic_id: string;
@@ -29,10 +32,11 @@ export default function Epics({
 }: {
   params: Promise<{ projectId: string }>;
 }) {
+  const dispatch = useDispatch();
+
   const [epics, setEpics] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState(true);
   const [epicId, setEpicId] = useState("");
-  const [openModal, setOpenModal] = useState(false);
   const { projectId } = use(params);
   useEffect(() => {
     async function getEpics() {
@@ -67,7 +71,7 @@ export default function Epics({
                     key={epic.id}
                     className="cursor-pointer min-w-[700px] md:min-w-0 shadow-2xl p-3 rounded-2xl flex justify-between items-center"
                     onClick={() => {
-                      setOpenModal(true);
+                      dispatch(setIsOpenEpicDetailsModal(true));
                       setEpicId(epic.id);
                     }}
                   >
@@ -102,12 +106,7 @@ export default function Epics({
                     <FaEllipsisVertical className="cursor-pointer textStyle" />
                   </div>
                 ))}
-                <EpicPopup
-                  epicId={epicId}
-                  open={openModal}
-                  setOpenModal={setOpenModal}
-                  projectId={projectId}
-                />
+                <EpicPopup epicId={epicId} projectId={projectId} />
               </>
             ) : (
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-3 w-full flex flex-col items-center justify-center gap-4 h-1/2">

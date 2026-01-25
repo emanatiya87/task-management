@@ -7,6 +7,9 @@ import { formatDate } from "@/utils/dateFormatter";
 import { useEffect, useState } from "react";
 import apiClient from "@/lib/apiClient";
 import Loading from "@/app/loading";
+import type { RootState } from "@/state/store";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsOpenEpicDetailsModal } from "@/state/features/epicDetailsModal/epicDetailsModalSlice";
 interface ProjectType {
   id: string;
   epic_id: string;
@@ -22,21 +25,22 @@ interface User {
 }
 export default function EpicPopup({
   epicId,
-  open,
-  setOpenModal,
   projectId,
 }: {
   epicId: string;
-  open: boolean;
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   projectId: string;
 }) {
   const tasks = null;
+  const openModalValue = useSelector(
+    (state: RootState) => state.isOpenEpicDetailsModal.value,
+  );
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(true);
   const [epic, setEpic] = useState<ProjectType | null>(null);
   useEffect(() => {
     async function getEpics() {
-      if (!open) return;
+      if (!openModalValue) return;
       try {
         const res = await apiClient.get(
           `/rest/v1/project_epics?project_id=eq.${projectId}&id=eq.${epicId}`,
@@ -49,10 +53,13 @@ export default function EpicPopup({
       }
     }
     getEpics();
-  }, [open]);
+  }, [openModalValue]);
   return (
     <>
-      <Modal show={open} onClose={() => setOpenModal(false)}>
+      <Modal
+        show={openModalValue}
+        onClose={() => dispatch(setIsOpenEpicDetailsModal(false))}
+      >
         {loading ? (
           <Loading />
         ) : (

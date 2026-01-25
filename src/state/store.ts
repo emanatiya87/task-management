@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
+import epicDetailsModalSliceReducer from "./features/epicDetailsModal/epicDetailsModalSlice";
 export const makeStore = () => {
   return configureStore({
     reducer: {
       isLogin: authReducer,
+      isOpenEpicDetailsModal: epicDetailsModalSliceReducer,
     },
   });
 };
