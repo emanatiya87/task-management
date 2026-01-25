@@ -99,9 +99,13 @@ export default function Epics({
                         width={30}
                         height={20}
                       />
-                      <p className="textStyle font-semibold">
-                        {epic?.assignee?.name}
-                      </p>
+                      {epic?.assignee?.name ? (
+                        <p className="textStyle font-semibold">
+                          {epic?.assignee?.name}
+                        </p>
+                      ) : (
+                        <p className="textStyle font-semibold">Unassigned</p>
+                      )}
                     </div>
                     <FaEllipsisVertical className="cursor-pointer textStyle" />
                   </div>
