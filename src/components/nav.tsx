@@ -40,7 +40,7 @@ export default function Nav() {
         >
           <Avatar name="Task Management" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white hidden sm:block">
-            AProjectO
+            Task Management
           </span>
         </Link>
         <DarkThemeToggle className="bg-white" />
@@ -53,7 +53,7 @@ export default function Nav() {
                   {user.department}
                 </h6>
               </div>
-              <DropdownComponent name={user.name || "?"} />
+              <DropdownComponent />
             </>
           ) : null}
         </div>
