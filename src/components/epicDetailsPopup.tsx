@@ -182,13 +182,7 @@ export default function EpicPopup({
                           {...register("description")}
                           rows={3}
                           className="textStyle w-full resize-none overflow-hidden"
-                          onInput={(e) => {
-                            const el = e.currentTarget;
-                            el.style.height = "auto";
-                            el.style.height = `${el.scrollHeight}px`;
-                          }}
                         />
-
                         {errors.description && (
                           <p className="text-red-500 text-sm mt-1">
                             {errors.description.message}
@@ -196,7 +190,14 @@ export default function EpicPopup({
                         )}
                       </div>
                     ) : (
-                      <p className="font-semibold"> No description provided</p>
+                      <textarea
+                        {...register("description")}
+                        rows={3}
+                        placeholder="No description provided"
+                        className={`textStyle w-full resize-none overflow-hidden ${
+                          !epic.description ? "font-semibold text-gray-400" : ""
+                        }`}
+                      />
                     )}
                     <hr className="text-gray-400 my-3.5" />
                     <h3 className=" mb-5 font-semibold textStyle">Tasks</h3>
