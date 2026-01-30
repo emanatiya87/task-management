@@ -12,7 +12,6 @@ import apiClient from "@/lib/apiClient";
 import EpicPopup from "@/components/epicDetailsPopup";
 import { useDispatch } from "react-redux";
 import { setIsOpenEpicDetailsModal } from "@/state/features/epicDetailsModal/epicDetailsModalSlice";
-import { error } from "console";
 interface ProjectType {
   id: string;
   epic_id: string;
@@ -37,7 +36,7 @@ export default function Epics({
   const [epics, setEpics] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState(true);
   const [epicId, setEpicId] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { projectId } = use(params);
   useEffect(() => {
     async function getEpics() {
@@ -46,10 +45,12 @@ export default function Epics({
           `/rest/v1/project_epics?project_id=eq.${projectId}`,
         );
         setEpics(res.data);
-        console.log(res.data);
       } catch (error) {
-        console.log(error);
-        setErrorMsg(error?.message);
+        if (error instanceof Error) {
+          setErrorMsg(error.message);
+        } else {
+          setErrorMsg("Something went wrong Try Again");
+        }
       } finally {
         setLoading(false);
       }
