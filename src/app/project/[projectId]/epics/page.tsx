@@ -10,7 +10,8 @@ import { Button } from "flowbite-react";
 import Avatar from "@/components/avatar";
 import apiClient from "@/lib/apiClient";
 import EpicPopup from "@/components/epicDetailsPopup";
-import { useDispatch } from "react-redux";
+import type { RootState } from "@/state/store";
+import { useDispatch, useSelector } from "react-redux";
 import { setIsOpenEpicDetailsModal } from "@/state/features/epicDetailsModal/epicDetailsModalSlice";
 interface ProjectType {
   id: string;
@@ -32,7 +33,9 @@ export default function Epics({
   params: Promise<{ projectId: string }>;
 }) {
   const dispatch = useDispatch();
-
+  const openModalValue = useSelector(
+    (state: RootState) => state.isOpenEpicDetailsModal.value,
+  );
   const [epics, setEpics] = useState<ProjectType[]>([]);
   const [loading, setLoading] = useState(true);
   const [epicId, setEpicId] = useState("");
@@ -56,7 +59,7 @@ export default function Epics({
       }
     }
     getEpics();
-  }, []);
+  }, [openModalValue]);
   if (errorMsg) {
     return (
       <p className="text-center">
