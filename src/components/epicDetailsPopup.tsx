@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { RootState } from "@/state/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsOpenEpicDetailsModal } from "@/state/features/epicDetailsModal/epicDetailsModalSlice";
+import useProjectMembers from "@/functions/useProjectMembers";
 interface ProjectType {
   id: string;
   epic_id: string;
@@ -35,13 +36,14 @@ export default function EpicPopup({
   epicId: string;
   projectId: string;
 }) {
+  const { members, loading, error } = useProjectMembers(projectId);
   const tasks = null;
   const openModalValue = useSelector(
     (state: RootState) => state.isOpenEpicDetailsModal.value,
   );
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(true);
+  const [fullLoading, setLoading] = useState(true);
   const [epic, setEpic] = useState<ProjectType | null>(null);
   useEffect(() => {
     async function getEpics() {
@@ -66,6 +68,7 @@ export default function EpicPopup({
   const schema = z.object({
     title: z.string().min(3, "the title should be min 3 chars"),
     description: z.string().max(500).optional(),
+    assignee_id: z.string().optional(),
   });
   type EpicInputs = z.infer<typeof schema>;
   const [errorMsg, setErrorMsg] = useState("");
@@ -80,6 +83,7 @@ export default function EpicPopup({
     defaultValues: {
       title: epic?.title,
       description: epic?.description,
+      assignee_id: epic?.assignee?.sub,
     },
   });
   useEffect(() => {
@@ -87,6 +91,7 @@ export default function EpicPopup({
       reset({
         title: epic.title,
         description: epic.description,
+        assignee_id: epic.assignee?.sub ?? "",
       });
     }
   }, [epic, reset]);
@@ -97,7 +102,7 @@ export default function EpicPopup({
       await apiClient.patch(`/rest/v1/epics?id=eq.${epicId}`, {
         title: data.title,
         description: data.description,
-        // assignee_id: "user-id"||null,
+        assignee_id: data.assignee_id || null,
         deadline: "2026-01-30",
       });
       setAddedSuccessfully(true);
@@ -115,7 +120,7 @@ export default function EpicPopup({
         show={openModalValue}
         onClose={() => dispatch(setIsOpenEpicDetailsModal(false))}
       >
-        {loading ? (
+        {fullLoading ? (
           <Loading />
         ) : (
           <>
@@ -159,10 +164,36 @@ export default function EpicPopup({
                         <span>Assignee </span>
                       </p>
                       {epic.assignee?.name ? (
-                        <p className="flex items-center">
-                          <Avatar name={epic.assignee?.name} />{" "}
-                          <span>{epic.assignee?.name}</span>
-                        </p>
+                        <>
+                          <div className="flex gap-0.5 w-full items-center">
+                            <div className="flex-1">
+                              <Avatar name={epic.assignee?.name} />
+                            </div>
+                            <select
+                              id="assignee_id"
+                              className=" border-none w-full pe-3 py-2.5 text-heading text-sm focus:ring-brand focus:border-brand "
+                              defaultValue=""
+                              {...register("assignee_id")}
+                            >
+                              {loading ? (
+                                <option>loading...</option>
+                              ) : (
+                                members.map((member, index) => {
+                                  return (
+                                    <option key={index} value={member.user_id}>
+                                      {member.metadata?.name}
+                                    </option>
+                                  );
+                                })
+                              )}
+                            </select>
+                            {errors.assignee_id && (
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.assignee_id.message}
+                              </p>
+                            )}
+                          </div>
+                        </>
                       ) : (
                         <>Unassigned</>
                       )}
