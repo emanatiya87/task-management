@@ -10,7 +10,9 @@ import useProjectMembers from "@/functions/useProjectMembers";
 import apiClient from "@/lib/apiClient";
 import { epicSchema, EpicInputs } from "@/schemas/epicSchema";
 import { epicType } from "@/types/epic";
+import { useRouter } from "next/navigation";
 export default function FormAddEpic({ project }: { project: epicType }) {
+  const router = useRouter();
   const { members, loading, error } = useProjectMembers(project.id);
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
@@ -34,7 +36,10 @@ export default function FormAddEpic({ project }: { project: epicType }) {
       });
 
       setAddedSuccessfully(true);
-      setTimeout(() => setAddedSuccessfully(false), 3000);
+      setTimeout(() => {
+        setAddedSuccessfully(false);
+        router.push(`/project/${project.id}/epics`);
+      }, 3000);
     } catch (error) {
       setErrorMsg("Failed to add epic: ");
     }
