@@ -75,10 +75,18 @@ export default function FormEditProject({ project }: { project: ProjectType }) {
             )}
           </div>
           <div className="ms-auto flex gap-3">
-            <Button className="px-11 cursor-pointer" type="submit">
+            <Button
+              className="px-11 cursor-pointer"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Save
             </Button>
-            <Button className="px-11 cursor-pointer " color="light">
+            <Button
+              className="px-11 cursor-pointer "
+              color="light"
+              disabled={isSubmitting}
+            >
               <Link href={"/project"}>Cancel</Link>
             </Button>
           </div>

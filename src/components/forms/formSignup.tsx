@@ -20,7 +20,7 @@ const schema = z
       .max(50)
       .regex(
         /^(?!.*\s{2,})[A-Za-z\u00C0-\u024F\u0600-\u06FF]+(?:\s[A-Za-z\u00C0-\u024F\u0600-\u06FF]+)*$/,
-        "Only letters and single spaces allowed (no numbers or special characters)"
+        "Only letters and single spaces allowed (no numbers or special characters)",
       ),
     email: z.string().email(),
     password: z
@@ -59,11 +59,11 @@ export default function FormSignUp() {
     reset,
   } = useForm<IFormInput>({ resolver: zodResolver(schema) });
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    setErrorMsg("");
-    // Send a POST request
-    axios
-      .post(
-        `${baseUrl}/auth/v1/signup`,
+    try {
+      setErrorMsg("");
+
+      await axios.post(
+        `${BaseUrl}/auth/v1/signup`,
         {
           email: data.email,
           password: data.password,
@@ -74,19 +74,17 @@ export default function FormSignUp() {
         },
         {
           headers: {
-            apikey: apiKey,
+            apikey: ApiKey,
             "Content-Type": "application/json",
           },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-        router.push("/registration/login");
-        reset();
-      })
-      .catch((error) => {
-        setErrorMsg(error.response.data.msg);
-      });
+        },
+      );
+
+      reset();
+      router.push("/registration/login");
+    } catch (error: any) {
+      setErrorMsg(error.response?.data?.msg || "Signup failed");
+    }
   };
 
   return (

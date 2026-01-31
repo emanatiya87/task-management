@@ -72,7 +72,11 @@ export default function FormAddProject() {
             )}
           </div>
           <div className="ms-auto">
-            <Button className="px-11 cursor-pointer" type="submit">
+            <Button
+              className="px-11 cursor-pointer"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Create
             </Button>
           </div>

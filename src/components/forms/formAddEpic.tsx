@@ -126,10 +126,18 @@ export default function FormAddEpic({ project }: { project: epicType }) {
             )}
           </div>
           <div className="ms-auto flex gap-3">
-            <Button className="px-11 cursor-pointer" type="submit">
+            <Button
+              className="px-11 cursor-pointer"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Create
             </Button>
-            <Button className="px-11 cursor-pointer " color="light">
+            <Button
+              className="px-11 cursor-pointer "
+              color="light"
+              disabled={isSubmitting}
+            >
               <Link href={"/project"}>Cancel</Link>
             </Button>
           </div>

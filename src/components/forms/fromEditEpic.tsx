@@ -80,8 +80,9 @@ export default function FormEditEpic({
           <ModalBody className="mt-0  pt-0">
             <div>
               <input
+                disabled={isSubmitting}
                 {...register("title")}
-                className="textStyle text-xl font-bold capitalize mb-3"
+                className="textStyle text-xl font-bold capitalize mb-3 w-full"
               />
               {errors.title && (
                 <p className="text-red-500 text-sm mt-1">
@@ -115,6 +116,7 @@ export default function FormEditEpic({
                 </div>
                 <select
                   {...register("assignee_id")}
+                  disabled={isSubmitting}
                   className="border-none w-full pe-3 py-2.5 text-heading text-sm focus:ring-brand focus:border-brand bg-transparent"
                 >
                   <option value="">Unassigned</option>
@@ -145,7 +147,11 @@ export default function FormEditEpic({
                 <SlCalender className="text-gray-700" />
                 <span>Deadline </span>
               </p>
-              <input type="date" {...register("deadline")} />
+              <input
+                type="date"
+                {...register("deadline")}
+                disabled={isSubmitting}
+              />
               {errors.deadline && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.deadline.message}
@@ -158,6 +164,7 @@ export default function FormEditEpic({
             {epic?.description ? (
               <div>
                 <textarea
+                  disabled={isSubmitting}
                   {...register("description")}
                   rows={3}
                   className="textStyle w-full resize-none overflow-hidden"
@@ -170,6 +177,7 @@ export default function FormEditEpic({
               </div>
             ) : (
               <textarea
+                disabled={isSubmitting}
                 {...register("description")}
                 rows={3}
                 placeholder="No description provided"

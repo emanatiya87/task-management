@@ -32,21 +32,20 @@ export default function FormLogin() {
     reset,
   } = useForm<LogInput>({ resolver: zodResolver(schema) });
   const onSubmit: SubmitHandler<LogInput> = async (data) => {
-    setErrorMsg("");
-    // Send a POST request
-    axios
-      .post("/api/auth/login", {
+    try {
+      setErrorMsg("");
+
+      await axios.post("/api/auth/login", {
         email: data.email,
         password: data.password,
-      })
-      .then((response) => {
-        reset();
-        router.push("/project");
-        dispatch(setIsLogin(true));
-      })
-      .catch((error) => {
-        setErrorMsg(error.response?.data?.error || "invalid email or password");
       });
+
+      reset();
+      router.push("/project");
+      dispatch(setIsLogin(true));
+    } catch (error: any) {
+      setErrorMsg(error.response?.data?.error || "invalid email or password");
+    }
   };
 
   return (
