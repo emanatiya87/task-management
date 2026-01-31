@@ -5,21 +5,14 @@ import apiClient from "@/lib/apiClient";
 import Loading from "@/app/loading";
 import Link from "next/link";
 import FormAddEpic from "@/components/forms/formAddEpic";
-import { epicType } from "@/types/epic";
-interface ProjectType {
-  id: string;
-  name: string;
-  description: string;
-  created_at: string;
-  deadline: string;
-}
+import { ProjectType } from "@/types/project";
 export default function AddEpic({
   params,
 }: {
   params: Promise<{ projectId: string }>;
 }) {
   const { projectId } = useParams<{ projectId: string }>();
-  const [project, setProjects] = useState<epicType[]>();
+  const [project, setProjects] = useState<ProjectType[]>();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function getProjects() {

@@ -9,9 +9,9 @@ import Link from "next/link";
 import useProjectMembers from "@/functions/useProjectMembers";
 import apiClient from "@/lib/apiClient";
 import { epicSchema, EpicInputs } from "@/schemas/epicSchema";
-import { epicType } from "@/types/epic";
 import { useRouter } from "next/navigation";
-export default function FormAddEpic({ project }: { project: epicType }) {
+import { ProjectType } from "@/types/project";
+export default function FormAddEpic({ project }: { project: ProjectType }) {
   const router = useRouter();
   const { members, loading, error } = useProjectMembers(project.id);
   const [errorMsg, setErrorMsg] = useState("");
