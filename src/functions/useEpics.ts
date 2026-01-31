@@ -5,7 +5,7 @@ import { epicType } from "@/types/epic";
 
 export function useEpics(projectId: string, refetchTrigger?: any) {
   const [epics, setEpics] = useState<epicType[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingEpics, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,5 +33,5 @@ export function useEpics(projectId: string, refetchTrigger?: any) {
     }
   }, [projectId, refetchTrigger]);
 
-  return { epics, loading, errorMsg };
+  return { epics, loadingEpics, errorMsg };
 }
