@@ -3,23 +3,13 @@ import { useState } from "react";
 import { Label, TextInput } from "flowbite-react";
 import { Button } from "flowbite-react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ToastComponent from "../toast";
 import Link from "next/link";
 import apiClient from "@/lib/apiClient";
-interface ProjectType {
-  id: string;
-  name: string;
-  description: string;
-  created_at: string;
-}
+import { projectInput, projectSchema } from "@/schemas/projectSchema";
+import { ProjectType } from "@/types/project";
 export default function FormEditProject({ project }: { project: ProjectType }) {
-  const schema = z.object({
-    name: z.string().min(3),
-    description: z.string().max(500).optional(),
-  });
-  type projectInput = z.infer<typeof schema>;
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
   const {
@@ -27,7 +17,7 @@ export default function FormEditProject({ project }: { project: ProjectType }) {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<projectInput>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(projectSchema),
     defaultValues: {
       name: project.name,
       description: project.description,
