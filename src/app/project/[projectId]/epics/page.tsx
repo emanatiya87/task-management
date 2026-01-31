@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { use, useState } from "react";
 import { FaRegLightbulb } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
 import Link from "next/link";
@@ -13,20 +13,7 @@ import EpicPopup from "@/components/epicDetailsPopup";
 import type { RootState } from "@/state/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsOpenEpicDetailsModal } from "@/state/features/epicDetailsModal/epicDetailsModalSlice";
-interface ProjectType {
-  id: string;
-  epic_id: string;
-  title: string;
-  description: string;
-  created_at: string;
-  assignee?: User;
-  created_by?: User;
-}
-interface User {
-  sub: string;
-  name: string;
-}
-
+import { useEpics } from "@/functions/useEpics";
 export default function Epics({
   params,
 }: {
@@ -36,30 +23,9 @@ export default function Epics({
   const openModalValue = useSelector(
     (state: RootState) => state.isOpenEpicDetailsModal.value,
   );
-  const [epics, setEpics] = useState<ProjectType[]>([]);
-  const [loading, setLoading] = useState(true);
   const [epicId, setEpicId] = useState("");
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { projectId } = use(params);
-  useEffect(() => {
-    async function getEpics() {
-      try {
-        const res = await apiClient.get(
-          `/rest/v1/project_epics?project_id=eq.${projectId}`,
-        );
-        setEpics(res.data);
-      } catch (error) {
-        if (error instanceof Error) {
-          setErrorMsg(error.message);
-        } else {
-          setErrorMsg("Something went wrong Try Again");
-        }
-      } finally {
-        setLoading(false);
-      }
-    }
-    getEpics();
-  }, [openModalValue]);
+  const { epics, loading, errorMsg } = useEpics(projectId, openModalValue);
   if (errorMsg) {
     return (
       <p className="text-center">
