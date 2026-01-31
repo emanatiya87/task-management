@@ -9,18 +9,9 @@ import Link from "next/link";
 import useProjectMembers from "@/functions/useProjectMembers";
 import apiClient from "@/lib/apiClient";
 import { epicSchema, EpicInputs } from "@/schemas/epicSchema";
-
-interface ProjectType {
-  id: string;
-  epic_id: string;
-  title: string;
-  description: string;
-  created_at: string;
-  deadline: string;
-}
-export default function FormAddEpic({ project }: { project: ProjectType }) {
+import { epicType } from "@/types/epic";
+export default function FormAddEpic({ project }: { project: epicType }) {
   const { members, loading, error } = useProjectMembers(project.id);
-
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
   const {

@@ -16,20 +16,7 @@ import type { RootState } from "@/state/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsOpenEpicDetailsModal } from "@/state/features/epicDetailsModal/epicDetailsModalSlice";
 import useProjectMembers from "@/functions/useProjectMembers";
-interface ProjectType {
-  id: string;
-  epic_id: string;
-  title: string;
-  description: string;
-  created_at: string;
-  deadline: string;
-  assignee?: User;
-  created_by?: User;
-}
-interface User {
-  sub: string;
-  name: string;
-}
+import { epicType } from "@/types/epic";
 export default function EpicPopup({
   epicId,
   projectId,
@@ -45,7 +32,7 @@ export default function EpicPopup({
   const dispatch = useDispatch();
 
   const [fullLoading, setLoading] = useState(true);
-  const [epic, setEpic] = useState<ProjectType | null>(null);
+  const [epic, setEpic] = useState<epicType | null>(null);
   useEffect(() => {
     async function getEpics() {
       if (!openModalValue) return;
