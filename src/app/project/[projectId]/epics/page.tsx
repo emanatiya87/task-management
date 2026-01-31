@@ -24,7 +24,7 @@ export default function Epics({
   );
   const [epicId, setEpicId] = useState("");
   const { projectId } = use(params);
-  const { epics, loading, errorMsg } = useEpics(projectId, openModalValue);
+  const { epics, loadingEpics, errorMsg } = useEpics(projectId, openModalValue);
   if (errorMsg) {
     return (
       <p className="text-center">
@@ -34,7 +34,7 @@ export default function Epics({
   } else {
     return (
       <>
-        {loading ? (
+        {loadingEpics ? (
           <Loading />
         ) : epics ? (
           <>
