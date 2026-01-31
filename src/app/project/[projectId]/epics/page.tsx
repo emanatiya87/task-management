@@ -8,7 +8,6 @@ import { formatDate } from "@/utils/dateFormatter";
 import Loading from "@/app/loading";
 import { Button } from "flowbite-react";
 import Avatar from "@/components/avatar";
-import apiClient from "@/lib/apiClient";
 import EpicPopup from "@/components/epicDetailsPopup";
 import type { RootState } from "@/state/store";
 import { useDispatch, useSelector } from "react-redux";
