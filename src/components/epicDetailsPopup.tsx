@@ -22,6 +22,7 @@ interface ProjectType {
   title: string;
   description: string;
   created_at: string;
+  deadline: string;
   assignee?: User;
   created_by?: User;
 }
@@ -65,10 +66,21 @@ export default function EpicPopup({
   }, [openModalValue]);
 
   // update
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const schema = z.object({
     title: z.string().min(3, "the title should be min 3 chars"),
     description: z.string().max(500).optional(),
     assignee_id: z.string().optional(),
+    deadline: z
+      .string()
+      .refine((value) => {
+        if (!value) return true;
+        const selectedDate = new Date(value);
+        selectedDate.setHours(0, 0, 0, 0);
+        return selectedDate >= today;
+      }, "Deadline must be today or in the future")
+      .optional(),
   });
   type EpicInputs = z.infer<typeof schema>;
   const [errorMsg, setErrorMsg] = useState("");
@@ -84,6 +96,7 @@ export default function EpicPopup({
       title: epic?.title,
       description: epic?.description,
       assignee_id: epic?.assignee?.sub,
+      deadline: epic?.deadline,
     },
   });
   useEffect(() => {
@@ -92,6 +105,7 @@ export default function EpicPopup({
         title: epic.title,
         description: epic.description,
         assignee_id: epic.assignee?.sub ?? "",
+        deadline: epic.deadline,
       });
     }
   }, [epic, reset]);
@@ -103,7 +117,7 @@ export default function EpicPopup({
         title: data.title,
         description: data.description,
         assignee_id: data.assignee_id || null,
-        deadline: "2026-01-30",
+        deadline: data.deadline,
       });
       setAddedSuccessfully(true);
       // Auto hide after 3 seconds
@@ -163,47 +177,55 @@ export default function EpicPopup({
                         <FaRegUserCircle className="text-gray-700" />
                         <span>Assignee </span>
                       </p>
-                      {epic.assignee?.name ? (
-                        <>
-                          <div className="flex gap-0.5 w-full items-center">
-                            <div className="flex-1">
-                              <Avatar name={epic.assignee?.name} />
-                            </div>
-                            <select
-                              id="assignee_id"
-                              className=" border-none w-full pe-3 py-2.5 text-heading text-sm focus:ring-brand focus:border-brand "
-                              defaultValue=""
-                              {...register("assignee_id")}
-                            >
-                              {loading ? (
-                                <option>loading...</option>
-                              ) : (
-                                members.map((member, index) => {
-                                  return (
-                                    <option key={index} value={member.user_id}>
-                                      {member.metadata?.name}
-                                    </option>
-                                  );
-                                })
-                              )}
-                            </select>
-                            {errors.assignee_id && (
-                              <p className="text-red-500 text-sm mt-1">
-                                {errors.assignee_id.message}
-                              </p>
-                            )}
-                          </div>
-                        </>
-                      ) : (
-                        <>Unassigned</>
-                      )}
+                      {/* assign to select */}
+                      <div className="flex items-center gap-2 w-full">
+                        <div className="flex-1">
+                          <Avatar name={epic.assignee?.name ?? "?"} />
+                        </div>
+                        <select
+                          {...register("assignee_id")}
+                          className="border-none w-full pe-3 py-2.5 text-heading text-sm focus:ring-brand focus:border-brand bg-transparent"
+                        >
+                          <option value="">Unassigned</option>
+                          {loading ? (
+                            <option disabled>Loading...</option>
+                          ) : (
+                            members.map((member) => (
+                              <option
+                                key={member.user_id}
+                                value={member.user_id}
+                              >
+                                {member.metadata?.name ?? member.name}
+                              </option>
+                            ))
+                          )}
+                        </select>
+                        {errors.assignee_id && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.assignee_id.message}
+                          </p>
+                        )}
+                      </div>
+                      {/* created at */}
                       <p className="flex items-center text-gray-700 gap-2">
                         <SlCalender className="text-gray-700" />
                         <span>Created At </span>
                       </p>
                       <p>{epic ? formatDate(epic.created_at) : ""}</p>
+                      {/* Deadline  */}
+                      <p className="flex items-center text-gray-700 gap-2">
+                        <SlCalender className="text-gray-700" />
+                        <span>Deadline </span>
+                      </p>
+                      <input type="date" {...register("deadline")} />
+                      {errors.deadline && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.deadline.message}
+                        </p>
+                      )}
                     </div>
                     <hr className="text-gray-400 my-3.5" />
+                    {/* description */}
                     <h3 className=" mb-5 font-semibold textStyle">
                       Description
                     </h3>
@@ -231,6 +253,7 @@ export default function EpicPopup({
                       />
                     )}
                     <hr className="text-gray-400 my-3.5" />
+                    {/* tasks */}
                     <h3 className=" mb-5 font-semibold textStyle">Tasks</h3>
                     <div>
                       {tasks ? (

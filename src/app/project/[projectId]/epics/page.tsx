@@ -112,7 +112,10 @@ export default function Epics({
                           </p>
                         </div>
                       ) : (
-                        <p className="textStyle font-semibold">Unassigned</p>
+                        <div className=" flex items center gap-1">
+                          <Avatar name="?" />
+                          <p className="textStyle font-semibold">Unassigned</p>
+                        </div>
                       )}
 
                       <FaEllipsisVertical className="cursor-pointer textStyle" />
