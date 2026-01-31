@@ -198,7 +198,9 @@ export default function FormEditEpic({
                   No tasks have been added to this epic yest
                 </p>
                 <Button>
-                  <Link href={`/project/${projectId}/tasks/new`}>
+                  <Link
+                    href={`/project/${projectId}/tasks/new?epicId=${epicId}`}
+                  >
                     Create New Tasks
                   </Link>
                 </Button>

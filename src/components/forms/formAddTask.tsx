@@ -12,13 +12,16 @@ import { taskSchema, TaskInputs } from "@/schemas/taskSchema";
 import { useRouter } from "next/navigation";
 import { ProjectType } from "@/types/project";
 import { useEpics } from "@/functions/useEpics";
+import { useSearchParams } from "next/navigation";
+import { truncate } from "@/functions/truncate";
 export default function FormAddTask({ project }: { project: ProjectType }) {
   const router = useRouter();
   const { members, loading, error } = useProjectMembers(project.id);
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
   const { epics, loadingEpics } = useEpics(project.id, false);
-
+  const searchParams = useSearchParams();
+  const epicId = searchParams.get("epicId");
   const {
     register,
     handleSubmit,
@@ -27,6 +30,7 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
     resolver: zodResolver(taskSchema),
     defaultValues: {
       status: "TO_DO",
+      epic_id: epicId ? epicId : "",
     },
   });
   const onSubmit: SubmitHandler<TaskInputs> = async (data) => {
@@ -175,19 +179,15 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
               <select
                 id="epic_id"
                 className="block md:w-sm max-w-full px-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
-                defaultValue=""
                 {...register("epic_id")}
               >
-                <option hidden value="">
-                  Choose an Epic
-                </option>
                 {loadingEpics ? (
                   <option>loading...</option>
                 ) : (
                   epics.map((epic, index) => {
                     return (
                       <option key={index} value={epic.id}>
-                        {epic.title}
+                        {epic.epic_id} {truncate(epic.title, 100)}
                       </option>
                     );
                   })
