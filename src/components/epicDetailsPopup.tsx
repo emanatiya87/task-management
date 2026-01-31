@@ -1,4 +1,4 @@
-import { Modal, ModalHeader } from "flowbite-react";
+import { Modal, ModalHeader, ModalBody } from "flowbite-react";
 import Loading from "@/app/loading";
 import type { RootState } from "@/state/store";
 import { useSelector, useDispatch } from "react-redux";
@@ -39,7 +39,9 @@ export default function EpicPopup({
                     Project/{epic.epic_id}
                   </p>
                 </ModalHeader>
-                <FormEditEpic projectId={projectId} epicId={epicId} />
+                <ModalBody className="mt-0  pt-0">
+                  <FormEditEpic projectId={projectId} epicId={epicId} />
+                </ModalBody>
               </>
             ) : (
               <>

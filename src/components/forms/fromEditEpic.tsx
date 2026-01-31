@@ -1,7 +1,7 @@
 "use client";
 import Avatar from "../avatar";
 import ToastComponent from "../toast";
-import { Button, ModalBody } from "flowbite-react";
+import { Button } from "flowbite-react";
 import { FaRegUser } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
@@ -77,137 +77,135 @@ export default function FormEditEpic({
         <Loading />
       ) : (
         <form onBlur={handleSubmit(onSubmit)}>
-          <ModalBody className="mt-0  pt-0">
-            <div>
-              <input
-                disabled={isSubmitting}
-                {...register("title")}
-                className="textStyle text-xl font-bold capitalize mb-3 w-full"
-              />
-              {errors.title && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.title.message}
-                </p>
-              )}
-            </div>
+          <div>
+            <input
+              disabled={isSubmitting}
+              {...register("title")}
+              className="textStyle text-xl font-bold capitalize mb-3 w-full"
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.title.message}
+              </p>
+            )}
+          </div>
 
-            <div className=" inline-grid grid-cols-[auto_auto] gap-x-6 gap-y-2  ">
-              <p className="flex items-center text-gray-700 gap-2">
-                <FaRegUser className="text-gray-700" />
-                <span>Created By </span>
+          <div className=" inline-grid grid-cols-[auto_auto] gap-x-6 gap-y-2  ">
+            <p className="flex items-center text-gray-700 gap-2">
+              <FaRegUser className="text-gray-700" />
+              <span>Created By </span>
+            </p>
+            {epic?.created_by?.name ? (
+              <p className="flex items-center">
+                <Avatar name={epic.created_by.name} />
+                <span>{epic.created_by.name}</span>
               </p>
-              {epic?.created_by?.name ? (
-                <p className="flex items-center">
-                  <Avatar name={epic.created_by.name} />
-                  <span>{epic.created_by.name}</span>
-                </p>
-              ) : (
-                <></>
-              )}
-
-              <p className="flex items-center text-gray-700 gap-2">
-                <FaRegUserCircle className="text-gray-700" />
-                <span>Assignee </span>
-              </p>
-              {/* assign to select */}
-              <div className="flex items-center gap-2 w-full">
-                <div className="flex-1">
-                  <Avatar name={epic?.assignee?.name ?? "?"} />
-                </div>
-                <select
-                  {...register("assignee_id")}
-                  disabled={isSubmitting}
-                  className="border-none w-full pe-3 py-2.5 text-heading text-sm focus:ring-brand focus:border-brand bg-transparent"
-                >
-                  <option value="">Unassigned</option>
-                  {loading ? (
-                    <option disabled>Loading...</option>
-                  ) : (
-                    members.map((member) => (
-                      <option key={member.user_id} value={member.user_id}>
-                        {member.metadata?.name ?? member.name}
-                      </option>
-                    ))
-                  )}
-                </select>
-                {errors.assignee_id && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.assignee_id.message}
-                  </p>
-                )}
-              </div>
-              {/* created at */}
-              <p className="flex items-center text-gray-700 gap-2">
-                <SlCalender className="text-gray-700" />
-                <span>Created At </span>
-              </p>
-              <p>{epic ? formatDate(epic.created_at) : ""}</p>
-              {/* Deadline  */}
-              <p className="flex items-center text-gray-700 gap-2">
-                <SlCalender className="text-gray-700" />
-                <span>Deadline </span>
-              </p>
-              <input
-                type="date"
-                {...register("deadline")}
-                disabled={isSubmitting}
-              />
-              {errors.deadline && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.deadline.message}
-                </p>
-              )}
-            </div>
-            <hr className="text-gray-400 my-3.5" />
-            {/* description */}
-            <h3 className=" mb-5 font-semibold textStyle">Description</h3>
-            {epic?.description ? (
-              <div>
-                <textarea
-                  disabled={isSubmitting}
-                  {...register("description")}
-                  rows={3}
-                  className="textStyle w-full resize-none overflow-hidden"
-                />
-                {errors.description && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.description.message}
-                  </p>
-                )}
-              </div>
             ) : (
+              <></>
+            )}
+
+            <p className="flex items-center text-gray-700 gap-2">
+              <FaRegUserCircle className="text-gray-700" />
+              <span>Assignee </span>
+            </p>
+            {/* assign to select */}
+            <div className="flex items-center gap-2 w-full">
+              <div className="flex-1">
+                <Avatar name={epic?.assignee?.name ?? "?"} />
+              </div>
+              <select
+                {...register("assignee_id")}
+                disabled={isSubmitting}
+                className="border-none w-full pe-3 py-2.5 text-heading text-sm focus:ring-brand focus:border-brand bg-transparent"
+              >
+                <option value="">Unassigned</option>
+                {loading ? (
+                  <option disabled>Loading...</option>
+                ) : (
+                  members.map((member) => (
+                    <option key={member.user_id} value={member.user_id}>
+                      {member.metadata?.name ?? member.name}
+                    </option>
+                  ))
+                )}
+              </select>
+              {errors.assignee_id && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.assignee_id.message}
+                </p>
+              )}
+            </div>
+            {/* created at */}
+            <p className="flex items-center text-gray-700 gap-2">
+              <SlCalender className="text-gray-700" />
+              <span>Created At </span>
+            </p>
+            <p>{epic ? formatDate(epic.created_at) : ""}</p>
+            {/* Deadline  */}
+            <p className="flex items-center text-gray-700 gap-2">
+              <SlCalender className="text-gray-700" />
+              <span>Deadline </span>
+            </p>
+            <input
+              type="date"
+              {...register("deadline")}
+              disabled={isSubmitting}
+            />
+            {errors.deadline && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.deadline.message}
+              </p>
+            )}
+          </div>
+          <hr className="text-gray-400 my-3.5" />
+          {/* description */}
+          <h3 className=" mb-5 font-semibold textStyle">Description</h3>
+          {epic?.description ? (
+            <div>
               <textarea
                 disabled={isSubmitting}
                 {...register("description")}
                 rows={3}
-                placeholder="No description provided"
-                className={`textStyle w-full resize-none overflow-hidden ${
-                  !epic?.description ? "font-semibold text-gray-400" : ""
-                }`}
+                className="textStyle w-full resize-none overflow-hidden"
               />
-            )}
-            <hr className="text-gray-400 my-3.5" />
-            {/* tasks */}
-            <h3 className=" mb-5 font-semibold textStyle">Tasks</h3>
-            <div>
-              {tasks ? (
-                <p className="textStyle">Tasks</p>
-              ) : (
-                <div className=" py-10 flex flex-col gap-2 items-center justify-center">
-                  <p className=" textStyle font-bold ">
-                    No tasks have been added to this epic yest
-                  </p>
-                  <Button>Create New Tasks</Button>
-                </div>
+              {errors.description && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.description.message}
+                </p>
               )}
             </div>
-            <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
-
-            <ToastComponent
-              message="Epic Edited successfully"
-              appear={addedSuccessfully}
+          ) : (
+            <textarea
+              disabled={isSubmitting}
+              {...register("description")}
+              rows={3}
+              placeholder="No description provided"
+              className={`textStyle w-full resize-none overflow-hidden ${
+                !epic?.description ? "font-semibold text-gray-400" : ""
+              }`}
             />
-          </ModalBody>
+          )}
+          <hr className="text-gray-400 my-3.5" />
+          {/* tasks */}
+          <h3 className=" mb-5 font-semibold textStyle">Tasks</h3>
+          <div>
+            {tasks ? (
+              <p className="textStyle">Tasks</p>
+            ) : (
+              <div className=" py-10 flex flex-col gap-2 items-center justify-center">
+                <p className=" textStyle font-bold ">
+                  No tasks have been added to this epic yest
+                </p>
+                <Button>Create New Tasks</Button>
+              </div>
+            )}
+          </div>
+          <p className="text-red-500 text-sm mt-1 text-center">{errorMsg}</p>
+
+          <ToastComponent
+            message="Epic Edited successfully"
+            appear={addedSuccessfully}
+          />
         </form>
       )}
     </>
