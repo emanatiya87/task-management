@@ -87,7 +87,7 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
               </p>
             )}
           </div>
-          <div className="flex justify-between sm:items-center items-start  flex-col gap-2 sm:flex-row">
+          <div className="flex justify-between lg:items-center items-start  flex-col gap-2 lg:flex-row flex-wrap">
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="assignee_id">Assign To</Label>
@@ -95,7 +95,7 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
 
               <select
                 id="assignee_id"
-                className="block max-w-sm px-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                className="block md:w-sm w-fit px-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
                 defaultValue=""
                 {...register("assignee_id")}
               >
@@ -127,7 +127,7 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
 
               <select
                 id="status"
-                className="block max-w-sm px-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                className="block md:w-sm w-fit px-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
                 {...register("status")}
               >
                 <option value="TO_DO">To do</option>
@@ -148,7 +148,7 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
               )}
             </div>
           </div>
-          <div className="flex justify-between sm:items-center items-start  flex-col gap-2 sm:flex-row">
+          <div className="flex justify-between lg:items-center items-start  flex-col gap-2 lg:flex-row flex-wrap">
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="due_date">due_date</Label>
@@ -158,7 +158,7 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
                   type="date"
                   id="due_date"
                   {...register("due_date")}
-                  className="blockmax-w-sm ps-3 pe-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base "
+                  className="block max-w-sm ps-3 pe-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base "
                 />
               </div>
               {errors.due_date && (
@@ -167,14 +167,14 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
                 </p>
               )}
             </div>
-            <div>
+            <div className="w-full md:w-sm ">
               <div className="mb-2 block">
                 <Label htmlFor="epic_id">Epics</Label>
               </div>
 
               <select
                 id="epic_id"
-                className="block max-w-sm px-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                className="block md:w-sm max-w-full px-3 py-2.5 bg-neutral-secondary-medium border border-gray-300 rounded-xl text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
                 defaultValue=""
                 {...register("epic_id")}
               >
@@ -200,7 +200,7 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
               )}
             </div>
           </div>
-          <div className="ms-auto flex gap-3">
+          <div className="ms-auto flex gap-3 flex-wrap">
             <Button
               className="px-11 cursor-pointer"
               type="submit"
