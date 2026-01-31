@@ -11,11 +11,14 @@ import apiClient from "@/lib/apiClient";
 import { taskSchema, TaskInputs } from "@/schemas/taskSchema";
 import { useRouter } from "next/navigation";
 import { ProjectType } from "@/types/project";
+import { useEpics } from "@/functions/useEpics";
 export default function FormAddTask({ project }: { project: ProjectType }) {
   const router = useRouter();
   const { members, loading, error } = useProjectMembers(project.id);
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
+  const { epics, loadingEpics } = useEpics(project.id, false);
+
   const {
     register,
     handleSubmit,
@@ -178,6 +181,17 @@ export default function FormAddTask({ project }: { project: ProjectType }) {
                 <option hidden value="">
                   Choose an Epic
                 </option>
+                {loadingEpics ? (
+                  <option>loading...</option>
+                ) : (
+                  epics.map((epic, index) => {
+                    return (
+                      <option key={index} value={epic.id}>
+                        {epic.title}
+                      </option>
+                    );
+                  })
+                )}
               </select>
               {errors.epic_id && (
                 <p className="text-red-500 text-sm mt-1">
