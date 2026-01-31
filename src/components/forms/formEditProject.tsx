@@ -9,7 +9,9 @@ import Link from "next/link";
 import apiClient from "@/lib/apiClient";
 import { projectInput, projectSchema } from "@/schemas/projectSchema";
 import { ProjectType } from "@/types/project";
+import { useRouter } from "next/navigation";
 export default function FormEditProject({ project }: { project: ProjectType }) {
+  const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
   const {
@@ -35,6 +37,7 @@ export default function FormEditProject({ project }: { project: ProjectType }) {
       // Auto hide after 3 seconds
       setTimeout(() => {
         setAddedSuccessfully(false);
+        router.push("/project");
       }, 3000);
     } catch (error) {
       setErrorMsg("Failed to edit project " + error);
