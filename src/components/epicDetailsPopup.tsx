@@ -9,7 +9,7 @@ import apiClient from "@/lib/apiClient";
 import Loading from "@/app/loading";
 import Avatar from "./avatar";
 import ToastComponent from "./toast";
-import { z } from "zod";
+import { epicSchema, EpicInputs } from "@/schemas/epicSchema";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { RootState } from "@/state/store";
@@ -66,23 +66,6 @@ export default function EpicPopup({
   }, [openModalValue]);
 
   // update
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const schema = z.object({
-    title: z.string().min(3, "the title should be min 3 chars"),
-    description: z.string().max(500).optional(),
-    assignee_id: z.string().optional(),
-    deadline: z
-      .string()
-      .refine((value) => {
-        if (!value) return true;
-        const selectedDate = new Date(value);
-        selectedDate.setHours(0, 0, 0, 0);
-        return selectedDate >= today;
-      }, "Deadline must be today or in the future")
-      .optional(),
-  });
-  type EpicInputs = z.infer<typeof schema>;
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
   const {
@@ -91,7 +74,7 @@ export default function EpicPopup({
     reset,
     formState: { errors, isSubmitting },
   } = useForm<EpicInputs>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(epicSchema),
     defaultValues: {
       title: epic?.title,
       description: epic?.description,

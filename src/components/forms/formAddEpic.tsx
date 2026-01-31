@@ -9,48 +9,34 @@ import ToastComponent from "../toast";
 import Link from "next/link";
 import useProjectMembers from "@/functions/useProjectMembers";
 import apiClient from "@/lib/apiClient";
+import { epicSchema, EpicInputs } from "@/schemas/epicSchema";
 
 interface ProjectType {
   id: string;
-  name: string;
+  epic_id: string;
+  title: string;
   description: string;
   created_at: string;
   deadline: string;
 }
 export default function FormAddEpic({ project }: { project: ProjectType }) {
   const { members, loading, error } = useProjectMembers(project.id);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const schema = z.object({
-    name: z.string().min(3, "Title is required at least 3 chars"),
-    description: z.string().optional(),
-    deadline: z
-      .string()
-      .refine((value) => {
-        if (!value) return true;
-        const selectedDate = new Date(value);
-        selectedDate.setHours(0, 0, 0, 0);
-        return selectedDate >= today;
-      }, "Deadline must be today or in the future")
-      .optional(),
-    assignee_id: z.string().optional(),
-  });
-  type projectInput = z.infer<typeof schema>;
+
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<projectInput>({
-    resolver: zodResolver(schema),
+  } = useForm<EpicInputs>({
+    resolver: zodResolver(epicSchema),
   });
-  const onSubmit: SubmitHandler<projectInput> = async (data) => {
+  const onSubmit: SubmitHandler<EpicInputs> = async (data) => {
     setErrorMsg("");
     // Send a POST request
     try {
       await apiClient.post("/rest/v1/epics", {
-        title: data.name,
+        title: data.title,
         description: data.description,
         assignee_id: data.assignee_id || null,
         project_id: project.id,
@@ -75,10 +61,12 @@ export default function FormAddEpic({ project }: { project: ProjectType }) {
               id="title"
               type="text"
               sizing="sm"
-              {...register("name")}
+              {...register("title")}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.title.message}
+              </p>
             )}
           </div>
           <div>
