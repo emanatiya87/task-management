@@ -25,7 +25,7 @@ export default function FormEditProject({ project }: { project: ProjectType }) {
   });
   const onSubmit: SubmitHandler<projectInput> = async (data) => {
     setErrorMsg("");
-    // Send a POST request
+    // Send a patch request
     try {
       await apiClient.patch(`/rest/v1/projects?id=eq.${project.id}`, {
         name: data.name,
