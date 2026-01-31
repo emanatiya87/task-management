@@ -7,7 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ToastComponent from "../toast";
 import apiClient from "@/lib/apiClient";
 import { projectInput, projectSchema } from "@/schemas/projectSchema";
+import { useRouter } from "next/navigation";
 export default function FormAddProject() {
+  const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
   const [addedSuccessfully, setAddedSuccessfully] = useState(false);
   const {
@@ -30,6 +32,7 @@ export default function FormAddProject() {
         // Auto hide after 3 seconds
         setTimeout(() => {
           setAddedSuccessfully(false);
+          router.push("/project");
         }, 3000);
       } catch (error) {
         setErrorMsg("Failed to create project: ");
@@ -38,7 +41,6 @@ export default function FormAddProject() {
   };
   return (
     <>
-      {" "}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-3 w-full flex flex-col gap-4 ">
           <div>
