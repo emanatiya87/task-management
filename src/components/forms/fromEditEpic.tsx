@@ -14,6 +14,7 @@ import apiClient from "@/lib/apiClient";
 import useProjectMembers from "@/functions/useProjectMembers";
 import { useEpic } from "@/functions/useEpic";
 import Loading from "@/app/loading";
+import Link from "next/link";
 export default function FormEditEpic({
   epicId,
   projectId,
@@ -196,7 +197,11 @@ export default function FormEditEpic({
                 <p className=" textStyle font-bold ">
                   No tasks have been added to this epic yest
                 </p>
-                <Button>Create New Tasks</Button>
+                <Button>
+                  <Link href={`/project/${projectId}/tasks/new`}>
+                    Create New Tasks
+                  </Link>
+                </Button>
               </div>
             )}
           </div>
